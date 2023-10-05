@@ -22,7 +22,7 @@ public class TabelaImportacaoDTO implements Serializable{
 	
 	public TabelaImportacaoDTO(TabelaImportacao entity) {
 		this.id = entity.getId();
-		this.nomeTabela = entity.getNomeTabela();
+		this.nomeTabela = entity.getNome();
 	}
 
 	public Long getId() {
