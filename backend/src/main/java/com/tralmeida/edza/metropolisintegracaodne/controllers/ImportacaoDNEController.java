@@ -1,10 +1,11 @@
 package com.tralmeida.edza.metropolisintegracaodne.controllers;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,9 +28,8 @@ public class ImportacaoDNEController {
 	private ImportacaoDNEService service;
 	
 	@GetMapping
-	public ResponseEntity<List <ImportacaoDNE>> findAll(){
-		List<ImportacaoDNE> imports = new ArrayList<>();
-		imports.add(new ImportacaoDNE(1L, "Importacao de Teste", new Timestamp(System.currentTimeMillis()), new TabelaImportacao(1L, "cg_pais", null)));
+	public ResponseEntity<Page <ImportacaoDNEDTO>> findAll(Pageable pageable){
+		Page<ImportacaoDNEDTO> imports = service.findAll(pageable);
 		return ResponseEntity.ok(imports);
 	}
 	
