@@ -38,20 +38,8 @@ public class ImportacaoDNEController {
 			@RequestParam("file") MultipartFile file,
 			@RequestParam("idTabela") Long idTabela,
 			@RequestParam("descricao") String descricao){
-		/*
-		 String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        long size = multipartFile.getSize();
-         
-        String filecode = FileUploadUtil.saveFile(fileName, multipartFile);
-         
-        FileUploadResponse response = new FileUploadResponse();
-        response.setFileName(fileName);
-        response.setSize(size);
-        response.setDownloadUri("/downloadFile/" + filecode);
-         
-        return new ResponseEntity<>(response, HttpStatus.OK);
-        */
-		ImportacaoDNEDTO dto = service.insert(getDTO(idTabela, descricao));
+		ImportacaoDNEDTO dto = getDTO(idTabela, descricao);
+		dto = service.insert(dto, file);
 		return ResponseEntity.created(null).body(dto);
 	}
 	

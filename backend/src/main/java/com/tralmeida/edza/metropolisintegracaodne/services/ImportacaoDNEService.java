@@ -1,18 +1,19 @@
 package com.tralmeida.edza.metropolisintegracaodne.services;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.sql.Timestamp;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.tralmeida.edza.metropolisintegracaodne.dto.ImportacaoDNEDTO;
 import com.tralmeida.edza.metropolisintegracaodne.entities.ImportacaoDNE;
-import com.tralmeida.edza.metropolisintegracaodne.entities.TabelaImportacao;
 import com.tralmeida.edza.metropolisintegracaodne.repositories.ImportacaoDNERepository;
 import com.tralmeida.edza.metropolisintegracaodne.repositories.TabelaImportacaoRepository;
 
@@ -32,7 +33,17 @@ public class ImportacaoDNEService {
 	}
 	
 	@Transactional
-	public ImportacaoDNEDTO insert(ImportacaoDNEDTO dto){
+	public ImportacaoDNEDTO insert(ImportacaoDNEDTO dto, MultipartFile multipartFile){
+		try {
+			Scanner scanner = new Scanner(multipartFile.getInputStream(),"windows-1252");
+			while(scanner.hasNextLine()) {
+				String line = scanner.nextLine();
+				System.out.println(line);
+				break;
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		ImportacaoDNE entity = copyDTOToEntity(dto);
 		entity.setDataImportacao(new Timestamp(System.currentTimeMillis()));
 		entity = repository.save(entity);
