@@ -1,7 +1,6 @@
 package com.tralmeida.edza.metropolisintegracaodne.services;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.sql.Timestamp;
 import java.util.Scanner;
 
@@ -34,16 +33,7 @@ public class ImportacaoDNEService {
 	
 	@Transactional
 	public ImportacaoDNEDTO insert(ImportacaoDNEDTO dto, MultipartFile multipartFile){
-		try {
-			Scanner scanner = new Scanner(multipartFile.getInputStream(),"windows-1252");
-			while(scanner.hasNextLine()) {
-				String line = scanner.nextLine();
-				System.out.println(line);
-				break;
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
 		ImportacaoDNE entity = copyDTOToEntity(dto);
 		entity.setDataImportacao(new Timestamp(System.currentTimeMillis()));
 		entity = repository.save(entity);
@@ -57,5 +47,17 @@ public class ImportacaoDNEService {
 		entity.setTabelaImportacao(tabelaImportacaoRepository.getReferenceById(dto.getTabelaImportacaoDTO().getId()));
 		
 		return entity;
+	}
+	
+	private void readMultipartFile(MultipartFile multipartFile) {
+		try {
+			Scanner scanner = new Scanner(multipartFile.getInputStream(),"windows-1252");
+			while(scanner.hasNextLine()) {
+				String line = scanner.nextLine();
+				
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

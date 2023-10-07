@@ -29,11 +29,10 @@ public class TabelaImportacao implements Serializable{
 	public TabelaImportacao() {
 	} 
 	
-	public TabelaImportacao(Long id, String nome, List<ImportacaoDNE> importacoes) {
+	public TabelaImportacao(Long id, String nome) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.importacoes = importacoes;
 	}
 
 	public Long getId() {
