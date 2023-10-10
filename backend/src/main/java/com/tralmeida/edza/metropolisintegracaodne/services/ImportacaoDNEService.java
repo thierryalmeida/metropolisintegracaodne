@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.tralmeida.edza.metropolisintegracaodne.dto.ImportacaoDNEDTO;
 import com.tralmeida.edza.metropolisintegracaodne.entities.ImportacaoDNE;
+import com.tralmeida.edza.metropolisintegracaodne.filereaders.DNEDelimitadoFileReader;
 import com.tralmeida.edza.metropolisintegracaodne.repositories.ImportacaoDNERepository;
 import com.tralmeida.edza.metropolisintegracaodne.repositories.TabelaImportacaoRepository;
 
@@ -33,7 +34,13 @@ public class ImportacaoDNEService {
 	
 	@Transactional
 	public ImportacaoDNEDTO insert(ImportacaoDNEDTO dto, MultipartFile multipartFile){
-		
+		try {
+			DNEDelimitadoFileReader fileReader = new DNEDelimitadoFileReader(multipartFile.getInputStream(), null);
+			fileReader.insertEntities();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		ImportacaoDNE entity = copyDTOToEntity(dto);
 		entity.setDataImportacao(new Timestamp(System.currentTimeMillis()));
 		entity = repository.save(entity);
@@ -49,15 +56,4 @@ public class ImportacaoDNEService {
 		return entity;
 	}
 	
-	private void readMultipartFile(MultipartFile multipartFile) {
-		try {
-			Scanner scanner = new Scanner(multipartFile.getInputStream(),"windows-1252");
-			while(scanner.hasNextLine()) {
-				String line = scanner.nextLine();
-				
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 }
