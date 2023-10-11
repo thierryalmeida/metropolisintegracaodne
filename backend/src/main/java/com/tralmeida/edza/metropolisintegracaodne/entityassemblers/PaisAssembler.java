@@ -3,15 +3,15 @@ package com.tralmeida.edza.metropolisintegracaodne.entityassemblers;
 import java.util.List;
 import java.util.Optional;
 
-import com.tralmeida.edza.metropolisintegracaodne.entities.TabelaImportacao;
-import com.tralmeida.edza.metropolisintegracaodne.repositories.TabelaImportacaoRepository;
+import com.tralmeida.edza.metropolisintegracaodne.entities.Pais;
+import com.tralmeida.edza.metropolisintegracaodne.repositories.PaisRepository;
 
-public class PaisAssembler implements AddressEntityAssembler<TabelaImportacao>{
+public class PaisAssembler implements AddressEntityAssembler<Pais>{
 	
-	private TabelaImportacaoRepository repository;
+	private PaisRepository repository;
 
 	@Override
-	public TabelaImportacaoRepository getEntityRepository() {
+	public PaisRepository getEntityRepository() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -23,7 +23,7 @@ public class PaisAssembler implements AddressEntityAssembler<TabelaImportacao>{
 	}
 
 	@Override
-	public TabelaImportacao get() {
+	public Pais get() {
 		// TODO Auto-generated method stub
 		return null;
 	}
