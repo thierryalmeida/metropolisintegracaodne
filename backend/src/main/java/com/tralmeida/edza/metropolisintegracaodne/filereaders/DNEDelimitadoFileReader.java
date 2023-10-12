@@ -13,7 +13,7 @@ public class DNEDelimitadoFileReader {
 	private InputStream fileInputStream;
 	private AddressEntityAssembler entityAssembler;
 	
-	public DNEDelimitadoFileReader(InputStream fileInputStream, AddressEntityAssembler<?> entityAssembler) {
+	public DNEDelimitadoFileReader(InputStream fileInputStream, AddressEntityAssembler entityAssembler) {
 		this.fileInputStream = fileInputStream;
 		this.entityAssembler = entityAssembler;
 	}
@@ -27,7 +27,7 @@ public class DNEDelimitadoFileReader {
 			Optional<?> entityOptional = entityAssembler.toAssemble(lineData);
 			
 			if(entityOptional.isPresent()) {
-				entityAssembler.getEntityRepository().save(entityOptional.get());
+				//entityAssembler.getEntityService().save(entityOptional.get());
 			}
 		}
 		scanner.close();

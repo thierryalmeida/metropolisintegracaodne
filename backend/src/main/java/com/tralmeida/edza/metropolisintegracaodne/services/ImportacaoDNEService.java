@@ -2,7 +2,6 @@ package com.tralmeida.edza.metropolisintegracaodne.services;
 
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,11 +10,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.tralmeida.edza.metropolisintegracaodne.constants.TableConstants;
 import com.tralmeida.edza.metropolisintegracaodne.dto.ImportacaoDNEDTO;
 import com.tralmeida.edza.metropolisintegracaodne.entities.ImportacaoDNE;
+import com.tralmeida.edza.metropolisintegracaodne.entityassemblers.AddressEntityAssembler;
 import com.tralmeida.edza.metropolisintegracaodne.filereaders.DNEDelimitadoFileReader;
 import com.tralmeida.edza.metropolisintegracaodne.repositories.ImportacaoDNERepository;
 import com.tralmeida.edza.metropolisintegracaodne.repositories.TabelaImportacaoRepository;
+import com.tralmeida.edza.metropolisintegracaodne.services.exceptions.AddressEntityNotFoundException;
 
 @Service
 public class ImportacaoDNEService {
@@ -35,7 +37,8 @@ public class ImportacaoDNEService {
 	@Transactional
 	public ImportacaoDNEDTO insert(ImportacaoDNEDTO dto, MultipartFile multipartFile){
 		try {
-			DNEDelimitadoFileReader fileReader = new DNEDelimitadoFileReader(multipartFile.getInputStream(), null);
+			AddressEntityAssembler entityAssembler = getAddressEntityAssemblerByIdTabela(dto.getTabelaImportacaoDTO().getId());
+			DNEDelimitadoFileReader fileReader = new DNEDelimitadoFileReader(multipartFile.getInputStream(), entityAssembler);
 			fileReader.insertEntities();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -56,4 +59,11 @@ public class ImportacaoDNEService {
 		return entity;
 	}
 	
+	private AddressEntityAssembler getAddressEntityAssemblerByIdTabela(Long idTabela) throws AddressEntityNotFoundException{
+		if(idTabela.equals(TableConstants.ID_TABELA_PAIS)) {
+			return null;
+		} else {
+			throw new AddressEntityNotFoundException("Address entity with ID "+idTabela+" not found.");
+		}
+	}
 }
