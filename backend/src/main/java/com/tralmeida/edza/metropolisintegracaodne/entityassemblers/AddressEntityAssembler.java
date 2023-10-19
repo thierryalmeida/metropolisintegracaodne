@@ -3,11 +3,10 @@ package com.tralmeida.edza.metropolisintegracaodne.entityassemblers;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Service;
+import jakarta.persistence.Entity;
 
-public interface AddressEntityAssembler {
+public interface AddressEntityAssembler<T> {
 	
-	public Optional<?> toAssemble(List<String> fields);
-	public Service getEntityService();
+	public Optional<T> toAssemble(List<String> fields);
+	public boolean save(T entity);
 }

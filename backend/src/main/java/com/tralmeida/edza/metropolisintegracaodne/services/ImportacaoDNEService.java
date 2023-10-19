@@ -14,6 +14,7 @@ import com.tralmeida.edza.metropolisintegracaodne.constants.TableConstants;
 import com.tralmeida.edza.metropolisintegracaodne.dto.ImportacaoDNEDTO;
 import com.tralmeida.edza.metropolisintegracaodne.entities.ImportacaoDNE;
 import com.tralmeida.edza.metropolisintegracaodne.entityassemblers.AddressEntityAssembler;
+import com.tralmeida.edza.metropolisintegracaodne.entityassemblers.PaisAssembler;
 import com.tralmeida.edza.metropolisintegracaodne.filereaders.DNEDelimitadoFileReader;
 import com.tralmeida.edza.metropolisintegracaodne.repositories.ImportacaoDNERepository;
 import com.tralmeida.edza.metropolisintegracaodne.repositories.TabelaImportacaoRepository;
@@ -37,7 +38,7 @@ public class ImportacaoDNEService {
 	@Transactional
 	public ImportacaoDNEDTO insert(ImportacaoDNEDTO dto, MultipartFile multipartFile){
 		try {
-			AddressEntityAssembler entityAssembler = getAddressEntityAssemblerByIdTabela(dto.getTabelaImportacaoDTO().getId());
+			AddressEntityAssembler<?> entityAssembler = getAddressEntityAssemblerByIdTabela(dto.getTabelaImportacaoDTO().getId());
 			DNEDelimitadoFileReader fileReader = new DNEDelimitadoFileReader(multipartFile.getInputStream(), entityAssembler);
 			fileReader.insertEntities();
 		} catch (IOException e) {
@@ -59,9 +60,9 @@ public class ImportacaoDNEService {
 		return entity;
 	}
 	
-	private AddressEntityAssembler getAddressEntityAssemblerByIdTabela(Long idTabela) throws AddressEntityNotFoundException{
+	private AddressEntityAssembler<?> getAddressEntityAssemblerByIdTabela(Long idTabela) throws AddressEntityNotFoundException{
 		if(idTabela.equals(TableConstants.ID_TABELA_PAIS)) {
-			return null;
+			return new PaisAssembler();
 		} else {
 			throw new AddressEntityNotFoundException("Address entity with ID "+idTabela+" not found.");
 		}
