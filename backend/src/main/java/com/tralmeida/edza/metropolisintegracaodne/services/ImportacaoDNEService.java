@@ -29,6 +29,9 @@ public class ImportacaoDNEService {
 	@Autowired
 	private TabelaImportacaoRepository tabelaImportacaoRepository;
 	
+	@Autowired
+	private PaisAssembler paisAssembler;
+	
 	@Transactional(readOnly = true)
 	public Page<ImportacaoDNEDTO> findAll(Pageable pageable){
 		Page<ImportacaoDNE> page = repository.findAll(pageable);
@@ -62,7 +65,7 @@ public class ImportacaoDNEService {
 	
 	private AddressEntityAssembler<?> getAddressEntityAssemblerByIdTabela(Long idTabela) throws AddressEntityNotFoundException{
 		if(idTabela.equals(TableConstants.ID_TABELA_PAIS)) {
-			return new PaisAssembler();
+			return this.paisAssembler;
 		} else {
 			throw new AddressEntityNotFoundException("Address entity with ID "+idTabela+" not found.");
 		}

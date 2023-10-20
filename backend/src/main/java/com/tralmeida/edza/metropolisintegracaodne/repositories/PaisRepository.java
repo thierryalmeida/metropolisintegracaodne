@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.tralmeida.edza.metropolisintegracaodne.entities.Pais;
 
 @Repository
-public interface PaisRepository extends JpaRepository<Pais, Long>{
+public interface PaisRepository extends JpaRepository<Pais, String>{
 
 }
