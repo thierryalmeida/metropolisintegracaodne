@@ -9,7 +9,7 @@ import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.tralmeida.edza.metropolisintegracaodne.entities.Pais;
-import com.tralmeida.edza.metropolisintegracaodne.entityassemblers.AddressEntityAssembler;
+import com.tralmeida.edza.metropolisintegracaodne.entityassemblers.AddressObjectAssembler;
 
 @SuppressWarnings("rawtypes")
 public class DNEDelimitadoFileReader {
@@ -17,9 +17,9 @@ public class DNEDelimitadoFileReader {
 	private InputStream fileInputStream;
 	
 	@Autowired
-	private AddressEntityAssembler entityAssembler;
+	private AddressObjectAssembler entityAssembler;
 	
-	public DNEDelimitadoFileReader(InputStream fileInputStream, AddressEntityAssembler entityAssembler) {
+	public DNEDelimitadoFileReader(InputStream fileInputStream, AddressObjectAssembler entityAssembler) {
 		this.fileInputStream = fileInputStream;
 		this.entityAssembler = entityAssembler;
 	}
