@@ -28,11 +28,6 @@ public class PaisService{
 		return new PaisDTO(entity);
 	}
 	
-	@Transactional
-	public Pais saveEntity(PaisDTO pais) {
-		return repository.saveAndFlush(getEntityByDTO(pais));
-	}
-	
 	private Pais getEntityByDTO(PaisDTO dto) {
 		Pais entity = new Pais();
 		entity.setPaisId(dto.getPaisId());
