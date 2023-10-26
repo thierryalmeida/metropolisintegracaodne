@@ -34,7 +34,7 @@ public class DNEDelimitadoFileReader {
 			Optional<?> entityOptional = entityAssembler.toAssemble(lineData);
 			
 			if(entityOptional.isPresent()) {
-				entityAssembler.save(entityOptional.get());
+				entityAssembler.saveAndMerge(entityOptional.get());
 			}
 		}
 		scanner.close();

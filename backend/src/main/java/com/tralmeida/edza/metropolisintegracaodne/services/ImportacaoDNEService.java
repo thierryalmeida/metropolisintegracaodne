@@ -14,7 +14,6 @@ import com.tralmeida.edza.metropolisintegracaodne.constants.TableConstants;
 import com.tralmeida.edza.metropolisintegracaodne.dto.ImportacaoDNEDTO;
 import com.tralmeida.edza.metropolisintegracaodne.entities.ImportacaoDNE;
 import com.tralmeida.edza.metropolisintegracaodne.entityassemblers.AddressObjectAssembler;
-import com.tralmeida.edza.metropolisintegracaodne.entityassemblers.PaisAssembler;
 import com.tralmeida.edza.metropolisintegracaodne.filereaders.DNEDelimitadoFileReader;
 import com.tralmeida.edza.metropolisintegracaodne.repositories.ImportacaoDNERepository;
 import com.tralmeida.edza.metropolisintegracaodne.repositories.TabelaImportacaoRepository;
@@ -30,7 +29,7 @@ public class ImportacaoDNEService {
 	private TabelaImportacaoRepository tabelaImportacaoRepository;
 	
 	@Autowired
-	private PaisAssembler paisAssembler;
+	private PaisService paisAssembler;
 	
 	@Transactional(readOnly = true)
 	public Page<ImportacaoDNEDTO> findAll(Pageable pageable){

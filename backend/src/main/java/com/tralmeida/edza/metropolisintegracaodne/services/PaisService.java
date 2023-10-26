@@ -1,5 +1,6 @@
 package com.tralmeida.edza.metropolisintegracaodne.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,38 +9,26 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tralmeida.edza.metropolisintegracaodne.dto.PaisDTO;
 import com.tralmeida.edza.metropolisintegracaodne.entities.Pais;
+import com.tralmeida.edza.metropolisintegracaodne.entityassemblers.AddressObjectAssembler;
 import com.tralmeida.edza.metropolisintegracaodne.repositories.PaisRepository;
 
 @Service
-public class PaisService{
+public class PaisService implements AddressObjectAssembler<PaisDTO>{
 	
 	@Autowired
 	private PaisRepository repository;
 	
-	@Transactional
-	public PaisDTO getReferenceToSave(String sigla){
-		Pais entity = null;
-		try{
-			entity = repository.getReferenceById(sigla);
-		} catch (Exception e) {
-			System.out.println("País com o id "+sigla+" não encontrado.");
-			return null;
-		}
-		return new PaisDTO(entity);
+	@Override
+	public Optional<PaisDTO> toAssemble(List<String> fields) {
+		PaisDTO pais = new PaisDTO();
+		pais.setNome(fields.get(2));
+		pais.setSigla(fields.get(0));
+		return Optional.of(pais);
 	}
 	
-	private Pais getEntityByDTO(PaisDTO dto) {
-		Pais entity = new Pais();
-		entity.setPaisId(dto.getPaisId());
-		entity.setSigla(dto.getSigla());
-		entity.setNome(dto.getNome());
-		entity.setNacionalidade(dto.getNacionalidade());
-		
-		return entity;
-	}
-	
+	@Override
 	@Transactional
-	public PaisDTO save(PaisDTO pais) {
+	public boolean saveAndMerge(PaisDTO pais) {
 		Pais entity = null;
 		Optional<Pais> entityOptional = repository.findById(pais.getSigla());
 		
@@ -48,7 +37,7 @@ public class PaisService{
 		} else {
 			entity = getEntityByDTO(pais);
 		}
-		return new PaisDTO(repository.saveAndFlush(entity));
+		return new PaisDTO(repository.saveAndFlush(entity)) != null;
 	}
 	
 	private Pais mergeEntityToUpdate(PaisDTO newPais, Pais oldPais) {
@@ -66,5 +55,15 @@ public class PaisService{
 		}
 		return oldPais;
 	}
-
+	
+	private Pais getEntityByDTO(PaisDTO dto) {
+		Pais entity = new Pais();
+		entity.setPaisId(dto.getPaisId());
+		entity.setSigla(dto.getSigla());
+		entity.setNome(dto.getNome());
+		entity.setNacionalidade(dto.getNacionalidade());
+		
+		return entity;
+	}
+	
 }
