@@ -1,15 +1,8 @@
 package com.tralmeida.edza.metropolisintegracaodne.dto;
 
 import java.io.Serializable;
-import java.util.Objects;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import com.tralmeida.edza.metropolisintegracaodne.entities.UnidadeFederativa;
 
 public class UnidadeFederativaDTO implements Serializable{
 	
@@ -24,6 +17,16 @@ public class UnidadeFederativaDTO implements Serializable{
 	private PaisDTO pais;
 	
 	public UnidadeFederativaDTO() {
+	}
+	
+	public UnidadeFederativaDTO(UnidadeFederativa entity) {
+		this.ufId = entity.getUfId();
+		this.sigla = entity.getSigla();
+		this.nome = entity.getNome();
+		this.oficial = entity.getOficial();
+		this.cepIni = entity.getCepIni();
+		this.cepFim = entity.getCepFim();
+		this.pais = new PaisDTO(entity.getPais());
 	}
 	
 	public UnidadeFederativaDTO(Long ufId, String sigla, String nome, Integer oficial, Long cepIni, Long cepFim,

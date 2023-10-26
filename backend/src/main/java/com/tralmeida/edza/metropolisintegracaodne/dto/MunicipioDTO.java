@@ -1,15 +1,9 @@
 package com.tralmeida.edza.metropolisintegracaodne.dto;
 
 import java.io.Serializable;
-import java.util.Objects;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import com.tralmeida.edza.metropolisintegracaodne.entities.Municipio;
+import com.tralmeida.edza.metropolisintegracaodne.entities.UnidadeFederativa;
 
 public class MunicipioDTO implements Serializable{
 	
@@ -30,7 +24,19 @@ public class MunicipioDTO implements Serializable{
 	
 	public MunicipioDTO() {
 	}
-
+	
+	public MunicipioDTO(Municipio entity) {
+		this.municipioId = entity.getMunicipioId();
+		this.nome = entity.getNome();
+		this.codigo = entity.getCodigo();
+		this.cep = entity.getCep();
+		this.oficial = entity.getOficial();
+		this.cepInicial = entity.getCepInicial();
+		this.cepFinal = entity.getCepFinal();
+		this.codigoTom = entity.getCodigoTom();
+		this.uf = new UnidadeFederativaDTO(entity.getUf());
+	}
+	
 	public MunicipioDTO(Long municipioId, String nome, Long codigo, Long cep, Integer oficial, Long cepInicial,
 			Long cepFinal, Long codigoTom, UnidadeFederativaDTO uf) {
 		super();

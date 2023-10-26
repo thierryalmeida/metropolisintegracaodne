@@ -2,15 +2,24 @@ package com.tralmeida.edza.metropolisintegracaodne.entities;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "cg_logradouro")
 public class Logradouro implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
+	@Id
 	private Integer logradouroId;
 	private Integer codigo;
 	private String nome;
@@ -37,6 +46,9 @@ public class Logradouro implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "municipioid")
 	private Municipio municipio;
+	
+	@OneToMany(mappedBy = "logradouro")
+	private Set<BairroLogradouro> bairrosLogradouro = new HashSet<>();
 	
 	public Logradouro() {
 	}
