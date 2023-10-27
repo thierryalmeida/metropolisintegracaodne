@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.tralmeida.edza.metropolisintegracaodne.entities.Pais;
 
 @Repository
-public interface PaisRepository extends JpaRepository<Pais, String>{
-
+public interface PaisRepository extends JpaRepository<Pais, Long>{
+	
+	Pais findBySigla(String sigla);
 }

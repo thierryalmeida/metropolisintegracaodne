@@ -29,11 +29,10 @@ public class PaisService implements AddressObjectAssembler<PaisDTO>{
 	@Override
 	@Transactional
 	public boolean saveAndMerge(PaisDTO pais) {
-		Pais entity = null;
-		Optional<Pais> entityOptional = repository.findById(pais.getSigla());
+		Pais entity = repository.findBySigla(pais.getSigla());
 		
-		if(entityOptional.isPresent()) {
-			entity = mergeEntityToUpdate(pais, entityOptional.get());
+		if(entity != null) {
+			entity = mergeEntityToUpdate(pais, entity);
 		} else {
 			entity = getEntityByDTO(pais);
 		}
