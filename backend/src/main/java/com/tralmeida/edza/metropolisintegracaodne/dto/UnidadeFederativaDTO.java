@@ -2,6 +2,7 @@ package com.tralmeida.edza.metropolisintegracaodne.dto;
 
 import java.io.Serializable;
 
+import com.tralmeida.edza.metropolisintegracaodne.entities.Pais;
 import com.tralmeida.edza.metropolisintegracaodne.entities.UnidadeFederativa;
 
 public class UnidadeFederativaDTO implements Serializable{
@@ -26,7 +27,11 @@ public class UnidadeFederativaDTO implements Serializable{
 		this.oficial = entity.getOficial();
 		this.cepIni = entity.getCepIni();
 		this.cepFim = entity.getCepFim();
-		this.pais = new PaisDTO(entity.getPais());
+	}
+	
+	public UnidadeFederativaDTO(UnidadeFederativa entity, Pais pais) {
+		this(entity);
+		this.pais = new PaisDTO(pais);
 	}
 	
 	public UnidadeFederativaDTO(Long ufId, String sigla, String nome, Integer oficial, Long cepIni, Long cepFim,

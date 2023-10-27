@@ -5,6 +5,6 @@ import java.util.Optional;
 
 public interface AddressObjectAssembler<T> {
 	
-	public Optional<T> toAssemble(List<String> fields);
-	public boolean saveAndMerge(T entity);
+	Optional<T> toAssemble(List<String> fields);
+	boolean saveAndMerge(T entity);
 }

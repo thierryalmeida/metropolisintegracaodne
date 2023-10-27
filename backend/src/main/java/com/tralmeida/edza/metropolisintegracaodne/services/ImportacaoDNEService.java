@@ -2,6 +2,7 @@ package com.tralmeida.edza.metropolisintegracaodne.services;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,6 +31,9 @@ public class ImportacaoDNEService {
 	
 	@Autowired
 	private PaisService paisAssembler;
+	
+	@Autowired
+	private UnidadeFederativaService ufAssembler;
 	
 	@Transactional(readOnly = true)
 	public Page<ImportacaoDNEDTO> findAll(Pageable pageable){
@@ -63,8 +67,13 @@ public class ImportacaoDNEService {
 	}
 	
 	private AddressObjectAssembler<?> getAddressEntityAssemblerByIdTabela(Long idTabela) throws AddressEntityNotFoundException{
-		if(idTabela.equals(TableConstants.ID_TABELA_PAIS)) {
-			return this.paisAssembler;
+		HashMap<Long, AddressObjectAssembler<?>> assemblerMap = new HashMap<>();
+		assemblerMap.put(TableConstants.ID_TABELA_PAIS, paisAssembler);
+		assemblerMap.put(TableConstants.ID_TABELA_UF, ufAssembler);
+		
+		AddressObjectAssembler<?> assembler = assemblerMap.get(idTabela);
+		if(assembler != null) {
+			return assembler;
 		} else {
 			throw new AddressEntityNotFoundException("Address entity with ID "+idTabela+" not found.");
 		}
