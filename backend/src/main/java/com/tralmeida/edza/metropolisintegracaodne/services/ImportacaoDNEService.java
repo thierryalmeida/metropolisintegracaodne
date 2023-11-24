@@ -35,6 +35,9 @@ public class ImportacaoDNEService {
 	@Autowired
 	private UnidadeFederativaService ufAssembler;
 	
+	@Autowired
+	private MunicipioService municipioAssembler;
+	
 	@Transactional(readOnly = true)
 	public Page<ImportacaoDNEDTO> findAll(Pageable pageable){
 		Page<ImportacaoDNE> page = repository.findAll(pageable);
@@ -70,6 +73,7 @@ public class ImportacaoDNEService {
 		HashMap<Long, AddressObjectAssembler<?>> assemblerMap = new HashMap<>();
 		assemblerMap.put(TableConstants.ID_TABELA_PAIS, paisAssembler);
 		assemblerMap.put(TableConstants.ID_TABELA_UF, ufAssembler);
+		assemblerMap.put(TableConstants.ID_TABELA_MUNICIPIO, municipioAssembler);
 		
 		AddressObjectAssembler<?> assembler = assemblerMap.get(idTabela);
 		if(assembler != null) {

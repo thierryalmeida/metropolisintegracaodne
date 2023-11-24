@@ -11,20 +11,25 @@ import com.tralmeida.edza.metropolisintegracaodne.dto.UnidadeFederativaDTO;
 import com.tralmeida.edza.metropolisintegracaodne.entities.Pais;
 import com.tralmeida.edza.metropolisintegracaodne.entities.UnidadeFederativa;
 import com.tralmeida.edza.metropolisintegracaodne.entityassemblers.AddressObjectAssembler;
+import com.tralmeida.edza.metropolisintegracaodne.repositories.PaisRepository;
 import com.tralmeida.edza.metropolisintegracaodne.repositories.UnidadeFederativaRepository;
+import com.tralmeida.edza.metropolisintegracaodne.util.ParseUtil;
 
 @Service
 public class UnidadeFederativaService implements AddressObjectAssembler<UnidadeFederativaDTO>{
 	
 	@Autowired
 	private UnidadeFederativaRepository repository;
+	
+	@Autowired
+	private PaisRepository paisRepository;
 
 	@Override
 	public Optional<UnidadeFederativaDTO> toAssemble(List<String> fields) {
 		UnidadeFederativaDTO ufDTO = new UnidadeFederativaDTO();
 		ufDTO.setSigla(fields.get(0));
-		ufDTO.setCepIni(Long.parseLong(fields.get(1)));
-		ufDTO.setCepFim(Long.parseLong(fields.get(2)));
+		ufDTO.setCepIni(ParseUtil.parseStringToLong(fields.get(1)));
+		ufDTO.setCepFim(ParseUtil.parseStringToLong(fields.get(2)));
 		ufDTO.setPaisDTO(new PaisDTO());
 		return Optional.of(ufDTO);
 	}
@@ -61,8 +66,8 @@ public class UnidadeFederativaService implements AddressObjectAssembler<UnidadeF
 			oldUf.setUfId(newUf.getUfId());
 		}
 		if(newUf.getPaisDTO() != null && newUf.getPaisDTO().getPaisId() != null) {
-			oldUf.setPais(new Pais());
-			oldUf.getPais().setPaisId(newUf.getPaisDTO().getPaisId());
+			Pais pais = paisRepository.findBySigla(newUf.getPaisDTO().getSigla());
+			oldUf.setPais(pais);
 		}
 		return oldUf;
 	}
