@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.tralmeida.edza.metropolisintegracaodne.constants.TableConstants;
 import com.tralmeida.edza.metropolisintegracaodne.dto.ImportacaoDNEDTO;
 import com.tralmeida.edza.metropolisintegracaodne.entities.ImportacaoDNE;
 import com.tralmeida.edza.metropolisintegracaodne.entityassemblers.AddressObjectAssembler;
+import com.tralmeida.edza.metropolisintegracaodne.enums.TableEnum;
 import com.tralmeida.edza.metropolisintegracaodne.filereaders.DNEDelimitadoFileReader;
 import com.tralmeida.edza.metropolisintegracaodne.repositories.ImportacaoDNERepository;
 import com.tralmeida.edza.metropolisintegracaodne.repositories.TabelaImportacaoRepository;
@@ -48,10 +48,9 @@ public class ImportacaoDNEService {
 	public ImportacaoDNEDTO insert(ImportacaoDNEDTO dto, MultipartFile multipartFile){
 		try {
 			AddressObjectAssembler<?> entityAssembler = getAddressEntityAssemblerByIdTabela(dto.getTabelaImportacaoDTO().getId());
-			DNEDelimitadoFileReader fileReader = new DNEDelimitadoFileReader(multipartFile.getInputStream(), entityAssembler);
+			DNEDelimitadoFileReader fileReader = new DNEDelimitadoFileReader(multipartFile, entityAssembler);
 			fileReader.insertEntities();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		ImportacaoDNE entity = copyDTOToEntity(dto);
@@ -71,9 +70,9 @@ public class ImportacaoDNEService {
 	
 	private AddressObjectAssembler<?> getAddressEntityAssemblerByIdTabela(Long idTabela) throws AddressEntityNotFoundException{
 		HashMap<Long, AddressObjectAssembler<?>> assemblerMap = new HashMap<>();
-		assemblerMap.put(TableConstants.ID_TABELA_PAIS, paisAssembler);
-		assemblerMap.put(TableConstants.ID_TABELA_UF, ufAssembler);
-		assemblerMap.put(TableConstants.ID_TABELA_MUNICIPIO, municipioAssembler);
+		assemblerMap.put(TableEnum.ID_TABELA_PAIS, paisAssembler);
+		assemblerMap.put(TableEnum.ID_TABELA_UF, ufAssembler);
+		assemblerMap.put(TableEnum.ID_TABELA_MUNICIPIO, municipioAssembler);
 		
 		AddressObjectAssembler<?> assembler = assemblerMap.get(idTabela);
 		if(assembler != null) {

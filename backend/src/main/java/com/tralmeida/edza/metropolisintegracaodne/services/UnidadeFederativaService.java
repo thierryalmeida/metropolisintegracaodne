@@ -11,6 +11,7 @@ import com.tralmeida.edza.metropolisintegracaodne.dto.UnidadeFederativaDTO;
 import com.tralmeida.edza.metropolisintegracaodne.entities.Pais;
 import com.tralmeida.edza.metropolisintegracaodne.entities.UnidadeFederativa;
 import com.tralmeida.edza.metropolisintegracaodne.entityassemblers.AddressObjectAssembler;
+import com.tralmeida.edza.metropolisintegracaodne.enums.ImportFile;
 import com.tralmeida.edza.metropolisintegracaodne.repositories.PaisRepository;
 import com.tralmeida.edza.metropolisintegracaodne.repositories.UnidadeFederativaRepository;
 import com.tralmeida.edza.metropolisintegracaodne.util.ParseUtil;
@@ -25,7 +26,7 @@ public class UnidadeFederativaService implements AddressObjectAssembler<UnidadeF
 	private PaisRepository paisRepository;
 
 	@Override
-	public Optional<UnidadeFederativaDTO> toAssemble(List<String> fields) {
+	public Optional<UnidadeFederativaDTO> toAssemble(List<String> fields, ImportFile importFile) {
 		UnidadeFederativaDTO ufDTO = new UnidadeFederativaDTO();
 		ufDTO.setSigla(fields.get(0));
 		ufDTO.setCepIni(ParseUtil.parseStringToLong(fields.get(1)));

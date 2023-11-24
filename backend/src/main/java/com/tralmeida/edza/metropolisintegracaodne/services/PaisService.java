@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tralmeida.edza.metropolisintegracaodne.dto.PaisDTO;
 import com.tralmeida.edza.metropolisintegracaodne.entities.Pais;
 import com.tralmeida.edza.metropolisintegracaodne.entityassemblers.AddressObjectAssembler;
+import com.tralmeida.edza.metropolisintegracaodne.enums.ImportFile;
 import com.tralmeida.edza.metropolisintegracaodne.repositories.PaisRepository;
 
 @Service
@@ -19,7 +20,7 @@ public class PaisService implements AddressObjectAssembler<PaisDTO>{
 	private PaisRepository repository;
 	
 	@Override
-	public Optional<PaisDTO> toAssemble(List<String> fields) {
+	public Optional<PaisDTO> toAssemble(List<String> fields, ImportFile importFile) {
 		PaisDTO pais = new PaisDTO();
 		pais.setNome(fields.get(2));
 		pais.setSigla(fields.get(0));

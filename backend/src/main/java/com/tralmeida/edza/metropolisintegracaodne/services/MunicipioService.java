@@ -11,6 +11,7 @@ import com.tralmeida.edza.metropolisintegracaodne.dto.UnidadeFederativaDTO;
 import com.tralmeida.edza.metropolisintegracaodne.entities.Municipio;
 import com.tralmeida.edza.metropolisintegracaodne.entities.UnidadeFederativa;
 import com.tralmeida.edza.metropolisintegracaodne.entityassemblers.AddressObjectAssembler;
+import com.tralmeida.edza.metropolisintegracaodne.enums.ImportFile;
 import com.tralmeida.edza.metropolisintegracaodne.repositories.MunicipioRepository;
 import com.tralmeida.edza.metropolisintegracaodne.repositories.UnidadeFederativaRepository;
 import com.tralmeida.edza.metropolisintegracaodne.util.ParseUtil;
@@ -25,7 +26,7 @@ public class MunicipioService implements AddressObjectAssembler<MunicipioDTO>{
 	private UnidadeFederativaRepository ufRepository;
 
 	@Override
-	public Optional<MunicipioDTO> toAssemble(List<String> fields) {
+	public Optional<MunicipioDTO> toAssemble(List<String> fields, ImportFile importFile) {
 		MunicipioDTO dto = new MunicipioDTO();
 		dto.setCodigo(ParseUtil.parseStringToLong(fields.get(0)));
 		dto.setMunicipioId(ParseUtil.parseStringToLong(fields.get(0)));

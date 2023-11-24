@@ -1,6 +1,6 @@
-package com.tralmeida.edza.metropolisintegracaodne.constants;
+package com.tralmeida.edza.metropolisintegracaodne.enums;
 
-public class TableConstants {
+public class TableEnum {
 	
 	public static final Long ID_TABELA_PAIS = 1L;
 	public static final Long ID_TABELA_UF = 2L;
