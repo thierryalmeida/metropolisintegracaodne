@@ -22,9 +22,13 @@ public class PaisService implements AddressObjectAssembler<PaisDTO>{
 	@Override
 	public Optional<PaisDTO> toAssemble(List<String> fields, ImportFile importFile) {
 		PaisDTO pais = new PaisDTO();
-		pais.setNome(fields.get(2));
-		pais.setSigla(fields.get(0));
-		return Optional.of(pais);
+		if(importFile.equals(ImportFile.ECT_PAIS)) {
+			pais.setNome(fields.get(2));
+			pais.setSigla(fields.get(0));
+			return Optional.of(pais);
+		} else {
+			return Optional.empty();
+		}
 	}
 	
 	@Override

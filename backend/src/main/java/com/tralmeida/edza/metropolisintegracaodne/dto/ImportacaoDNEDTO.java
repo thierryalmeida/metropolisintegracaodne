@@ -9,36 +9,42 @@ public class ImportacaoDNEDTO implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	private Long id;
+	private Long importacaoId;
 	private String descricao;
 	private Timestamp dataImportacao;
 	private TabelaImportacaoDTO tabelaImportacaoDTO;
+	private Long registrosLidos;
+	private Long registrosImportados;
 	
 	public ImportacaoDNEDTO() {
 	}
 	
-	public ImportacaoDNEDTO(Long id, String descricao, Timestamp dataImportacao,
-			TabelaImportacaoDTO tabelaImportacaoDTO) {
+	public ImportacaoDNEDTO(Long id, String descricao, Timestamp dataImportacao, Long registrosImportados,
+			Long registrosLidos, TabelaImportacaoDTO tabelaImportacaoDTO) {
 		super();
-		this.id = id;
+		this.importacaoId = id;
 		this.descricao = descricao;
 		this.dataImportacao = dataImportacao;
 		this.tabelaImportacaoDTO = tabelaImportacaoDTO;
+		this.registrosImportados = registrosImportados;
+		this.registrosLidos = registrosLidos;
 	}
 	
 	public ImportacaoDNEDTO(ImportacaoDNE entity) {
-		this.id = entity.getId();
+		this.importacaoId = entity.getImportacaoId();
 		this.descricao = entity.getDescricao();
 		this.dataImportacao = entity.getDataImportacao();
 		this.tabelaImportacaoDTO = new TabelaImportacaoDTO(entity.getTabelaImportacao());
+		this.registrosImportados = entity.getRegistrosImportados();
+		this.registrosLidos = entity.getRegistrosLidos();
 	}
 
-	public Long getId() {
-		return id;
+	public Long getImportacaoId() {
+		return importacaoId;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setImportacaoId(Long id) {
+		this.importacaoId = id;
 	}
 
 	public String getDescricao() {
@@ -65,5 +71,19 @@ public class ImportacaoDNEDTO implements Serializable{
 		this.tabelaImportacaoDTO = tabelaImportacaoDTO;
 	}
 	
-	
+	public Long getRegistrosLidos() {
+		return registrosLidos;
+	}
+
+	public void setRegistrosLidos(Long registrosLidos) {
+		this.registrosLidos = registrosLidos;
+	}
+
+	public Long getRegistrosImportados() {
+		return registrosImportados;
+	}
+
+	public void setRegistrosImportados(Long registrosImportados) {
+		this.registrosImportados = registrosImportados;
+	}
 }

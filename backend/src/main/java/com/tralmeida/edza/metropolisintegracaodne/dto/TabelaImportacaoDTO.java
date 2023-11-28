@@ -8,7 +8,7 @@ public class TabelaImportacaoDTO implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	private Long id;
+	private Long tabelaImportacaoId;
 	private String nomeTabela;
 	
 	public TabelaImportacaoDTO() {
@@ -16,21 +16,21 @@ public class TabelaImportacaoDTO implements Serializable{
 	
 	public TabelaImportacaoDTO(Long id, String nomeTabela) {
 		super();
-		this.id = id;
+		this.tabelaImportacaoId = id;
 		this.nomeTabela = nomeTabela;
 	}
 	
 	public TabelaImportacaoDTO(TabelaImportacao entity) {
-		this.id = entity.getId();
+		this.tabelaImportacaoId = entity.getTabelaImportacaoId();
 		this.nomeTabela = entity.getNome();
 	}
 
-	public Long getId() {
-		return id;
+	public Long getTabelaImportacaoId() {
+		return tabelaImportacaoId;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setTabelaImportacaoId(Long id) {
+		this.tabelaImportacaoId = id;
 	}
 
 	public String getNomeTabela() {

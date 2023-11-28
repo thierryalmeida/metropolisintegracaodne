@@ -22,27 +22,44 @@ public class DNEDelimitadoFileReader {
 	@Autowired
 	private AddressObjectAssembler entityAssembler;
 	
+	private Long linesRead;
+	
 	public DNEDelimitadoFileReader(MultipartFile file, AddressObjectAssembler entityAssembler) {
 		this.file = file;
 		this.entityAssembler = entityAssembler;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void insertEntities() throws IOException{
+	public Long insertEntities() throws IOException{
 		Scanner scanner = new Scanner(file.getInputStream(),"windows-1252");
+		Long importedLines = 0L;
+		this.linesRead = 0L;
 		
 		ImportFile importFile = detectImportFile();
 		while(scanner.hasNextLine()) {
 			String line = scanner.nextLine();
 			ArrayList<String> lineData = readLine(line);
 			
-			Optional<?> entityOptional = entityAssembler.toAssemble(lineData, importFile);
+			Optional<?> entityOptional = Optional.empty();
+			
+			try {
+				entityOptional = entityAssembler.toAssemble(lineData, importFile);
+				linesRead++;
+			} catch (Exception e) {
+				System.out.println("Erro ao ler linha: "+line);
+			}
 			
 			if(entityOptional.isPresent()) {
-				entityAssembler.saveAndMerge(entityOptional.get());
+				try {
+					entityAssembler.saveAndMerge(entityOptional.get());
+					importedLines++;
+				} catch(Exception e){
+					System.out.println("Erro ao importar linha: "+line);
+				}
 			}
 		}
 		scanner.close();
+		return importedLines;
 	}
 	
 	private ArrayList<String> readLine(String line){
@@ -52,9 +69,15 @@ public class DNEDelimitadoFileReader {
 	
 	private ImportFile detectImportFile() {
 		try {
-			return ImportFile.valueOf(file.getOriginalFilename().toUpperCase().replace(".TXT",""));
+			String fileName = file.getOriginalFilename();
+			System.out.println("File name: "+fileName);
+			return ImportFile.valueOf(fileName.toUpperCase().replace(".TXT",""));
 		} catch(Exception e) {
 			return null;
 		}
+	}
+
+	public Long getLinesRead() {
+		return linesRead;
 	}
 }

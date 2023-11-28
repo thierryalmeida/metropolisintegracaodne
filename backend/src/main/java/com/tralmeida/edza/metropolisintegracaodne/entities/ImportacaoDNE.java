@@ -20,9 +20,11 @@ public class ImportacaoDNE implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long importacaoId;
 	private String descricao;
 	private Timestamp dataImportacao;
+	private Long registrosLidos;
+	private Long registrosImportados;
 	
 	@ManyToOne
 	@JoinColumn(name = "tabelaimportacaoid")
@@ -33,18 +35,18 @@ public class ImportacaoDNE implements Serializable{
 
 	public ImportacaoDNE(Long id, String descricao, Timestamp dataImportacao, TabelaImportacao tabelaImportacao) {
 		super();
-		this.id = id;
+		this.importacaoId = id;
 		this.descricao = descricao;
 		this.dataImportacao = dataImportacao;
 		this.tabelaImportacao = tabelaImportacao;
 	}
 
-	public Long getId() {
-		return id;
+	public Long getImportacaoId() {
+		return importacaoId;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setImportacaoId(Long id) {
+		this.importacaoId = id;
 	}
 
 	public String getDescricao() {
@@ -71,9 +73,25 @@ public class ImportacaoDNE implements Serializable{
 		this.tabelaImportacao = tabelaImportacao;
 	}
 
+	public Long getRegistrosLidos() {
+		return registrosLidos;
+	}
+
+	public void setRegistrosLidos(Long registrosLidos) {
+		this.registrosLidos = registrosLidos;
+	}
+
+	public Long getRegistrosImportados() {
+		return registrosImportados;
+	}
+
+	public void setRegistrosImportados(Long registrosImportados) {
+		this.registrosImportados = registrosImportados;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(importacaoId);
 	}
 
 	@Override
@@ -85,7 +103,7 @@ public class ImportacaoDNE implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		ImportacaoDNE other = (ImportacaoDNE) obj;
-		return Objects.equals(id, other.id);
+		return Objects.equals(importacaoId, other.importacaoId);
 	}
 	
 }

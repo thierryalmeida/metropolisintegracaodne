@@ -28,13 +28,25 @@ public class MunicipioService implements AddressObjectAssembler<MunicipioDTO>{
 	@Override
 	public Optional<MunicipioDTO> toAssemble(List<String> fields, ImportFile importFile) {
 		MunicipioDTO dto = new MunicipioDTO();
-		dto.setCodigo(ParseUtil.parseStringToLong(fields.get(0)));
-		dto.setMunicipioId(ParseUtil.parseStringToLong(fields.get(0)));
-		dto.setUf(new UnidadeFederativaDTO());
-		dto.getUf().setSigla(fields.get(1));
-		dto.setNome(fields.get(2));
-		dto.setCep(ParseUtil.parseStringToLong(fields.get(3)));
-		return Optional.of(dto);
+		if(importFile.equals(ImportFile.LOG_LOCALIDADE)) {
+			dto.setCodigo(ParseUtil.parseStringToLong(fields.get(0)));
+			dto.setMunicipioId(ParseUtil.parseStringToLong(fields.get(0)));
+			dto.setUf(new UnidadeFederativaDTO());
+			dto.getUf().setSigla(fields.get(1));
+			dto.setNome(fields.get(2));
+			dto.setCep(ParseUtil.parseStringToLong(fields.get(3)));
+			
+			return Optional.of(dto);
+		} else if (importFile.equals(ImportFile.LOG_FAIXA_LOCALIDADE)) {
+			dto.setCodigo(ParseUtil.parseStringToLong(fields.get(0)));
+			dto.setMunicipioId(ParseUtil.parseStringToLong(fields.get(0)));
+			dto.setCepInicial(ParseUtil.parseStringToLong(fields.get(1)));
+			dto.setCepFinal(ParseUtil.parseStringToLong(fields.get(2)));
+			
+			return Optional.of(dto);
+		} else {
+			return Optional.empty();
+		}
 	}
 
 	@Override

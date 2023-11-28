@@ -28,11 +28,16 @@ public class UnidadeFederativaService implements AddressObjectAssembler<UnidadeF
 	@Override
 	public Optional<UnidadeFederativaDTO> toAssemble(List<String> fields, ImportFile importFile) {
 		UnidadeFederativaDTO ufDTO = new UnidadeFederativaDTO();
-		ufDTO.setSigla(fields.get(0));
-		ufDTO.setCepIni(ParseUtil.parseStringToLong(fields.get(1)));
-		ufDTO.setCepFim(ParseUtil.parseStringToLong(fields.get(2)));
-		ufDTO.setPaisDTO(new PaisDTO());
-		return Optional.of(ufDTO);
+		if(importFile.equals(ImportFile.LOG_FAIXA_UF)) {
+			ufDTO.setSigla(fields.get(0));
+			ufDTO.setCepIni(ParseUtil.parseStringToLong(fields.get(1)));
+			ufDTO.setCepFim(ParseUtil.parseStringToLong(fields.get(2)));
+			ufDTO.setPaisDTO(new PaisDTO());
+			
+			return Optional.of(ufDTO);
+		}else {
+			return Optional.empty();
+		}
 	}
 
 	@Override

@@ -46,15 +46,19 @@ public class ImportacaoDNEService {
 	
 	@Transactional
 	public ImportacaoDNEDTO insert(ImportacaoDNEDTO dto, MultipartFile multipartFile){
+		AddressObjectAssembler<?> entityAssembler = getAddressEntityAssemblerByIdTabela(dto.getTabelaImportacaoDTO().getTabelaImportacaoId());
+		DNEDelimitadoFileReader fileReader = new DNEDelimitadoFileReader(multipartFile, entityAssembler);
+		
+		Long registrosImportados = 0L;
 		try {
-			AddressObjectAssembler<?> entityAssembler = getAddressEntityAssemblerByIdTabela(dto.getTabelaImportacaoDTO().getId());
-			DNEDelimitadoFileReader fileReader = new DNEDelimitadoFileReader(multipartFile, entityAssembler);
-			fileReader.insertEntities();
+			registrosImportados = fileReader.insertEntities();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		ImportacaoDNE entity = copyDTOToEntity(dto);
 		entity.setDataImportacao(new Timestamp(System.currentTimeMillis()));
+		entity.setRegistrosLidos(fileReader.getLinesRead());
+		entity.setRegistrosImportados(registrosImportados);
 		entity = repository.save(entity);
 		
 		return new ImportacaoDNEDTO(entity);
@@ -63,7 +67,7 @@ public class ImportacaoDNEService {
 	private ImportacaoDNE copyDTOToEntity(ImportacaoDNEDTO dto) {
 		ImportacaoDNE entity = new ImportacaoDNE();
 		entity.setDescricao(dto.getDescricao());
-		entity.setTabelaImportacao(tabelaImportacaoRepository.getReferenceById(dto.getTabelaImportacaoDTO().getId()));
+		entity.setTabelaImportacao(tabelaImportacaoRepository.getReferenceById(dto.getTabelaImportacaoDTO().getTabelaImportacaoId()));
 		
 		return entity;
 	}

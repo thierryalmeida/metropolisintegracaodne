@@ -47,7 +47,7 @@ public class ImportacaoDNEController {
 		ImportacaoDNEDTO dto = new ImportacaoDNEDTO();
 		dto.setDescricao(descricao);
 		dto.setTabelaImportacaoDTO(new TabelaImportacaoDTO());
-		dto.getTabelaImportacaoDTO().setId(idTabela);
+		dto.getTabelaImportacaoDTO().setTabelaImportacaoId(idTabela);
 		
 		return dto;
 	}

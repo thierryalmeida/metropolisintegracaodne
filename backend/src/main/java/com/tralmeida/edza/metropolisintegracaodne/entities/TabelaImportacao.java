@@ -20,7 +20,7 @@ public class TabelaImportacao implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long tabelaImportacaoId;
 	private String nome;
 	
 	@OneToMany(mappedBy = "tabelaImportacao")
@@ -31,16 +31,16 @@ public class TabelaImportacao implements Serializable{
 	
 	public TabelaImportacao(Long id, String nome) {
 		super();
-		this.id = id;
+		this.tabelaImportacaoId = id;
 		this.nome = nome;
 	}
 
-	public Long getId() {
-		return id;
+	public Long getTabelaImportacaoId() {
+		return tabelaImportacaoId;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setTabelaImportacaoId(Long id) {
+		this.tabelaImportacaoId = id;
 	}
 
 	public String getNome() {
@@ -61,7 +61,7 @@ public class TabelaImportacao implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, importacoes, nome);
+		return Objects.hash(tabelaImportacaoId, importacoes, nome);
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class TabelaImportacao implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		TabelaImportacao other = (TabelaImportacao) obj;
-		return Objects.equals(id, other.id) && Objects.equals(importacoes, other.importacoes)
+		return Objects.equals(tabelaImportacaoId, other.tabelaImportacaoId) && Objects.equals(importacoes, other.importacoes)
 				&& Objects.equals(nome, other.nome);
 	} 
 
