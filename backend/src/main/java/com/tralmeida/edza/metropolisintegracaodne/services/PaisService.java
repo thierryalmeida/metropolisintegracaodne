@@ -1,10 +1,13 @@
 package com.tralmeida.edza.metropolisintegracaodne.services;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tralmeida.edza.metropolisintegracaodne.dto.PaisDTO;
@@ -32,7 +35,7 @@ public class PaisService implements AddressObjectAssembler<PaisDTO>{
 	}
 	
 	@Override
-	@Transactional
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public boolean saveAndMerge(PaisDTO pais) {
 		Pais entity = repository.findBySigla(pais.getSigla());
 		

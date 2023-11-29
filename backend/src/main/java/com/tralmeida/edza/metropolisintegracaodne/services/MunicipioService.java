@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.tralmeida.edza.metropolisintegracaodne.dto.MunicipioDTO;
 import com.tralmeida.edza.metropolisintegracaodne.dto.UnidadeFederativaDTO;
@@ -50,6 +52,7 @@ public class MunicipioService implements AddressObjectAssembler<MunicipioDTO>{
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public boolean saveAndMerge(MunicipioDTO entityDTO) {
 		Optional<Municipio> optional = repository.findById(entityDTO.getMunicipioId());
 		

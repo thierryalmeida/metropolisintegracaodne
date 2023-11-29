@@ -51,8 +51,9 @@ public class DNEDelimitadoFileReader {
 			
 			if(entityOptional.isPresent()) {
 				try {
-					entityAssembler.saveAndMerge(entityOptional.get());
-					importedLines++;
+					if(entityAssembler.saveAndMerge(entityOptional.get())) {
+						importedLines++;
+					}
 				} catch(Exception e){
 					System.out.println("Erro ao importar linha: "+line);
 				}
