@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.TableGenerator;
 
 @Entity
 @Table(name = "cg_municipio")
@@ -18,7 +19,6 @@ public class Municipio implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long municipioId;
 	
 	private String nome;

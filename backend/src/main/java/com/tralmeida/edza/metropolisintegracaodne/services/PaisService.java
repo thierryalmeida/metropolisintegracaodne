@@ -1,11 +1,9 @@
 package com.tralmeida.edza.metropolisintegracaodne.services;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +26,7 @@ public class PaisService implements AddressObjectAssembler<PaisDTO>{
 		if(importFile.equals(ImportFile.ECT_PAIS)) {
 			pais.setNome(fields.get(2));
 			pais.setSigla(fields.get(0));
+			pais.setNacionalidade(fields.get(2));
 			return Optional.of(pais);
 		} else {
 			return Optional.empty();

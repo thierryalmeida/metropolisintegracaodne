@@ -32,8 +32,10 @@ public class UnidadeFederativaService implements AddressObjectAssembler<UnidadeF
 		UnidadeFederativaDTO ufDTO = new UnidadeFederativaDTO();
 		if(importFile.equals(ImportFile.LOG_FAIXA_UF)) {
 			ufDTO.setSigla(fields.get(0));
+			ufDTO.setNome(fields.get(0));
 			ufDTO.setCepIni(ParseUtil.parseStringToLong(fields.get(1)));
 			ufDTO.setCepFim(ParseUtil.parseStringToLong(fields.get(2)));
+			ufDTO.setOficial(1);
 			ufDTO.setPaisDTO(new PaisDTO());
 			
 			return Optional.of(ufDTO);
@@ -51,6 +53,8 @@ public class UnidadeFederativaService implements AddressObjectAssembler<UnidadeF
 			entity = mergeEntityToUpdate(entityDTO, entity);
 		} else {
 			entity = getEntityByDTO(entityDTO);
+			Pais pais = paisRepository.findBySigla("BR");
+			entity.setPais(pais);
 		}
 		return new UnidadeFederativaDTO(repository.saveAndFlush(entity)) != null;
 	}
@@ -86,6 +90,8 @@ public class UnidadeFederativaService implements AddressObjectAssembler<UnidadeF
 		entity.setCepIni(dto.getCepIni());
 		entity.setCepFim(dto.getCepFim());
 		entity.setSigla(dto.getSigla());
+		entity.setNome(dto.getNome());
+		entity.setOficial(dto.getOficial());
 		return entity;
 	}
 

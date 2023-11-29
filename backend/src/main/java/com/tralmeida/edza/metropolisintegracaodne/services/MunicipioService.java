@@ -37,6 +37,7 @@ public class MunicipioService implements AddressObjectAssembler<MunicipioDTO>{
 			dto.getUf().setSigla(fields.get(1));
 			dto.setNome(fields.get(2));
 			dto.setCep(ParseUtil.parseStringToLong(fields.get(3)));
+			dto.setOficial(1);
 			
 			return Optional.of(dto);
 		} else if (importFile.equals(ImportFile.LOG_FAIXA_LOCALIDADE)) {
@@ -58,7 +59,7 @@ public class MunicipioService implements AddressObjectAssembler<MunicipioDTO>{
 		
 		Municipio entity = new Municipio();
 		if(optional.isPresent()) {
-			entity = mergeEntityToUpdate(entityDTO, entity);
+			entity = mergeEntityToUpdate(entityDTO, optional.get());
 		} else {
 			entity = getEntityByDTO(entityDTO);
 		}

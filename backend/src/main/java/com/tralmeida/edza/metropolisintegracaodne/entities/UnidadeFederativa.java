@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.TableGenerator;
 
 @Entity
 @Table(name = "cg_uf")
@@ -17,8 +18,11 @@ public class UnidadeFederativa implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
+	@TableGenerator(name = "seq_metropolis", table = "seq_block",
+			pkColumnName = "name", valueColumnName = "idx", pkColumnValue = "public.cg_uf.ufId",
+			initialValue = 0, allocationSize = 1)
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "seq_metropolis")
 	private Long ufId;
 	
 	private String sigla;

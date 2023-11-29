@@ -7,7 +7,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.persistence.TableGenerator;
 
 @Entity
 @Table(name = "cg_pais")
@@ -15,8 +17,11 @@ public class Pais implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
+	@TableGenerator(name = "seq_metropolis", table = "seq_block",
+			pkColumnName = "name", valueColumnName = "idx", pkColumnValue = "public.cg_pais.paisId",
+			initialValue = 0, allocationSize = 1)
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "seq_metropolis")
 	private Long paisId;
 	
 	private String sigla;
