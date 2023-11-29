@@ -31,7 +31,6 @@ public class MunicipioService implements AddressObjectAssembler<MunicipioDTO>{
 	public Optional<MunicipioDTO> toAssemble(List<String> fields, ImportFile importFile) {
 		MunicipioDTO dto = new MunicipioDTO();
 		if(importFile.equals(ImportFile.LOG_LOCALIDADE)) {
-			dto.setCodigo(ParseUtil.parseStringToLong(fields.get(0)));
 			dto.setMunicipioId(ParseUtil.parseStringToLong(fields.get(0)));
 			dto.setUf(new UnidadeFederativaDTO());
 			dto.getUf().setSigla(fields.get(1));
@@ -41,7 +40,6 @@ public class MunicipioService implements AddressObjectAssembler<MunicipioDTO>{
 			
 			return Optional.of(dto);
 		} else if (importFile.equals(ImportFile.LOG_FAIXA_LOCALIDADE)) {
-			dto.setCodigo(ParseUtil.parseStringToLong(fields.get(0)));
 			dto.setMunicipioId(ParseUtil.parseStringToLong(fields.get(0)));
 			dto.setCepInicial(ParseUtil.parseStringToLong(fields.get(1)));
 			dto.setCepFinal(ParseUtil.parseStringToLong(fields.get(2)));
