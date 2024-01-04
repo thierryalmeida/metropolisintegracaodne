@@ -16,7 +16,7 @@ public class Bairro implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	private Integer bairroId;
+	private Long bairroId;
 	
 	private String nome;
 	private String cep;
@@ -34,7 +34,7 @@ public class Bairro implements Serializable{
 	public Bairro() {
 	}
 
-	public Bairro(Integer bairroId, String nome, String cep, String oficial, String tpImovel, String grupoBairro,
+	public Bairro(Long bairroId, String nome, String cep, String oficial, String tpImovel, String grupoBairro,
 			String tipo, String cepInicial, String cepFinal, Municipio municipio) {
 		super();
 		this.bairroId = bairroId;
@@ -49,11 +49,11 @@ public class Bairro implements Serializable{
 		this.municipio = municipio;
 	}
 
-	public Integer getBairroId() {
+	public Long getBairroId() {
 		return bairroId;
 	}
 
-	public void setBairroId(Integer bairroId) {
+	public void setBairroId(Long bairroId) {
 		this.bairroId = bairroId;
 	}
 

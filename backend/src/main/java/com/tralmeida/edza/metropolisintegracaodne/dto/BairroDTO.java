@@ -8,7 +8,7 @@ public class BairroDTO implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	private Integer bairroId;
+	private Long bairroId;
 	
 	private String nome;
 	private String cep;
@@ -38,7 +38,7 @@ public class BairroDTO implements Serializable{
 		this.municipio = new MunicipioDTO(entity.getMunicipio());
 	}
 	
-	public BairroDTO(Integer bairroId, String nome, String cep, String oficial, String tpImovel, String grupoBairro,
+	public BairroDTO(Long bairroId, String nome, String cep, String oficial, String tpImovel, String grupoBairro,
 			String tipo, String cepInicial, String cepFinal, MunicipioDTO municipio) {
 		super();
 		this.bairroId = bairroId;
@@ -53,11 +53,11 @@ public class BairroDTO implements Serializable{
 		this.municipio = municipio;
 	}
 
-	public Integer getBairroId() {
+	public Long getBairroId() {
 		return bairroId;
 	}
 
-	public void setBairroId(Integer bairroId) {
+	public void setBairroId(Long bairroId) {
 		this.bairroId = bairroId;
 	}
 

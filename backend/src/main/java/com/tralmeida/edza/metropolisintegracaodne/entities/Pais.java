@@ -23,7 +23,7 @@ public class Pais implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "seq_metropolis")
 	private Long paisId;
-	
+	private Long codigo;
 	private String sigla;
 	private String nome;
 	private String nacionalidade;
@@ -86,5 +86,13 @@ public class Pais implements Serializable{
 			return false;
 		Pais other = (Pais) obj;
 		return Objects.equals(sigla, other.sigla);
+	}
+
+	public Long getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(Long codigo) {
+		this.codigo = codigo;
 	}
 }
