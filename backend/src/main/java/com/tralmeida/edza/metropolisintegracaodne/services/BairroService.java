@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tralmeida.edza.metropolisintegracaodne.constants.ConstantesEndereco;
 import com.tralmeida.edza.metropolisintegracaodne.dto.BairroDTO;
+import com.tralmeida.edza.metropolisintegracaodne.dto.MunicipioDTO;
 import com.tralmeida.edza.metropolisintegracaodne.entities.Bairro;
 import com.tralmeida.edza.metropolisintegracaodne.entities.Municipio;
 import com.tralmeida.edza.metropolisintegracaodne.entityassemblers.AddressObjectAssembler;
@@ -25,19 +27,23 @@ public class BairroService implements AddressObjectAssembler<BairroDTO>{
 	
 	@Autowired
 	private MunicipioRepository municipioRepository;
-
+	
 	@Override
 	public Optional<BairroDTO> toAssemble(List<String> fields, ImportFile importFile) {
 		BairroDTO dto = new BairroDTO();
 		if(importFile.equals(ImportFile.LOG_BAIRRO)) {
 			dto.setBairroId(ParseUtil.parseStringToLong(fields.get(0)));
+			dto.setMunicipioDTO(new MunicipioDTO());
+			dto.getMunicipioDTO().setMunicipioId(ParseUtil.parseStringToLong(fields.get(2)));
 			dto.setNome(fields.get(3));
+			dto.setTipo("M");
+			dto.setOficial(ConstantesEndereco.OFICIAL);
 			
 			return Optional.of(dto);
 		} else if (importFile.equals(ImportFile.LOG_FAIXA_BAIRRO)) {
 			dto.setBairroId(ParseUtil.parseStringToLong(fields.get(0)));
-			dto.setCepInicial(fields.get(1));
-			dto.setCepFinal(fields.get(2));
+			dto.setCepInicial(ParseUtil.parseStringToLong(fields.get(1)));
+			dto.setCepFinal(ParseUtil.parseStringToLong(fields.get(2)));
 			
 			return Optional.of(dto);
 		} else {

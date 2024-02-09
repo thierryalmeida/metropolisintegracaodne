@@ -11,13 +11,13 @@ public class BairroDTO implements Serializable{
 	private Long bairroId;
 	
 	private String nome;
-	private String cep;
-	private String oficial;
+	private Long cep;
+	private Integer oficial;
 	private String tpImovel;
 	private String grupoBairro;
 	private String tipo;
-	private String cepInicial;
-	private String cepFinal;
+	private Long cepInicial;
+	private Long cepFinal;
 	
 	private MunicipioDTO municipio;
 	
@@ -38,8 +38,8 @@ public class BairroDTO implements Serializable{
 		this.municipio = new MunicipioDTO(entity.getMunicipio());
 	}
 	
-	public BairroDTO(Long bairroId, String nome, String cep, String oficial, String tpImovel, String grupoBairro,
-			String tipo, String cepInicial, String cepFinal, MunicipioDTO municipio) {
+	public BairroDTO(Long bairroId, String nome, Long cep, Integer oficial, String tpImovel, String grupoBairro,
+			String tipo, Long cepInicial, Long cepFinal, String Integer, MunicipioDTO municipio) {
 		super();
 		this.bairroId = bairroId;
 		this.nome = nome;
@@ -69,19 +69,19 @@ public class BairroDTO implements Serializable{
 		this.nome = nome;
 	}
 
-	public String getCep() {
+	public Long getCep() {
 		return cep;
 	}
 
-	public void setCep(String cep) {
+	public void setCep(Long cep) {
 		this.cep = cep;
 	}
 
-	public String getOficial() {
+	public Integer getOficial() {
 		return oficial;
 	}
 
-	public void setOficial(String oficial) {
+	public void setOficial(Integer oficial) {
 		this.oficial = oficial;
 	}
 
@@ -109,19 +109,19 @@ public class BairroDTO implements Serializable{
 		this.tipo = tipo;
 	}
 
-	public String getCepInicial() {
+	public Long getCepInicial() {
 		return cepInicial;
 	}
 
-	public void setCepInicial(String cepInicial) {
+	public void setCepInicial(Long cepInicial) {
 		this.cepInicial = cepInicial;
 	}
 
-	public String getCepFinal() {
+	public Long getCepFinal() {
 		return cepFinal;
 	}
 
-	public void setCepFinal(String cepFinal) {
+	public void setCepFinal(Long cepFinal) {
 		this.cepFinal = cepFinal;
 	}
 

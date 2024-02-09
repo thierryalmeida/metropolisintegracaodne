@@ -38,6 +38,9 @@ public class ImportacaoDNEService {
 	@Autowired
 	private MunicipioService municipioAssembler;
 	
+	@Autowired
+	private BairroService bairroAssembler;
+	
 	@Transactional(readOnly = true)
 	public Page<ImportacaoDNEDTO> findAll(Pageable pageable){
 		Page<ImportacaoDNE> page = repository.findAll(pageable);
@@ -77,6 +80,8 @@ public class ImportacaoDNEService {
 		assemblerMap.put(TableEnum.ID_TABELA_PAIS, paisAssembler);
 		assemblerMap.put(TableEnum.ID_TABELA_UF, ufAssembler);
 		assemblerMap.put(TableEnum.ID_TABELA_MUNICIPIO, municipioAssembler);
+		assemblerMap.put(TableEnum.ID_TABELA_BAIRRO, bairroAssembler);
+		//assemblerMap.put(TableEnum.ID_TABELA_LOGRADOURO, logradouroAssembler);
 		
 		AddressObjectAssembler<?> assembler = assemblerMap.get(idTabela);
 		if(assembler != null) {
