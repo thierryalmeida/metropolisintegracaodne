@@ -20,11 +20,11 @@ public class Logradouro implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	private Integer logradouroId;
+	private Long logradouroId;
 	private Integer codigo;
 	private String nome;
 	private Integer oficial;
-	private Integer tipoLogradouroId;
+	private Long tipoLogradouroId;
 	private Integer tituloLogradouroId;
 	private String nome_Anterior;
 	private String tpImovel;
@@ -53,7 +53,7 @@ public class Logradouro implements Serializable{
 	public Logradouro() {
 	}
 
-	public Logradouro(Integer logradouroId, Integer codigo, String nome, Integer oficial, Integer tipoLogradouroId,
+	public Logradouro(Long logradouroId, Integer codigo, String nome, Integer oficial, Long tipoLogradouroId,
 			Integer tituloLogradouroId, String nome_Anterior, String tpImovel, Integer logradouroFinalId,
 			String nomeAnterior, String numeroDocumentoLegal, Timestamp dataDocumentoLegal, Integer limiteMetrico,
 			Boolean logradouroOficial, Integer logradouroInicialId, Integer logradouroGeoId, String cep,
@@ -85,11 +85,11 @@ public class Logradouro implements Serializable{
 		this.municipio = municipio;
 	}
 
-	public Integer getLogradouroId() {
+	public Long getLogradouroId() {
 		return logradouroId;
 	}
 
-	public void setLogradouroId(Integer logradouroId) {
+	public void setLogradouroId(Long logradouroId) {
 		this.logradouroId = logradouroId;
 	}
 
@@ -117,11 +117,11 @@ public class Logradouro implements Serializable{
 		this.oficial = oficial;
 	}
 
-	public Integer getTipoLogradouroId() {
+	public Long getTipoLogradouroId() {
 		return tipoLogradouroId;
 	}
 
-	public void setTipoLogradouroId(Integer tipoLogradouroId) {
+	public void setTipoLogradouroId(Long tipoLogradouroId) {
 		this.tipoLogradouroId = tipoLogradouroId;
 	}
 

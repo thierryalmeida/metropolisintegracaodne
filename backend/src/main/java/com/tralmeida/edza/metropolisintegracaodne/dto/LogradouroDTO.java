@@ -9,11 +9,11 @@ public class LogradouroDTO implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	private Integer logradouroId;
+	private Long logradouroId;
 	private Integer codigo;
 	private String nome;
 	private Integer oficial;
-	private Integer tipoLogradouroId;
+	private Long tipoLogradouroId;
 	private Integer tituloLogradouroId;
 	private String nome_Anterior;
 	private String tpImovel;
@@ -64,7 +64,7 @@ public class LogradouroDTO implements Serializable{
 		this.municipio = new MunicipioDTO(entity.getMunicipio());
 	}
 	
-	public LogradouroDTO(Integer logradouroId, Integer codigo, String nome, Integer oficial, Integer tipoLogradouroId,
+	public LogradouroDTO(Long logradouroId, Integer codigo, String nome, Integer oficial, Long tipoLogradouroId,
 			Integer tituloLogradouroId, String nome_Anterior, String tpImovel, Integer logradouroFinalId,
 			String nomeAnterior, String numeroDocumentoLegal, Timestamp dataDocumentoLegal, Integer limiteMetrico,
 			Boolean logradouroOficial, Integer logradouroInicialId, Integer logradouroGeoId, String cep,
@@ -96,4 +96,187 @@ public class LogradouroDTO implements Serializable{
 		this.municipio = municipio;
 	}
 
+	public Long getLogradouroId() {
+		return logradouroId;
+	}
+
+	public void setLogradouroId(Long logradouroId) {
+		this.logradouroId = logradouroId;
+	}
+
+	public Integer getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(Integer codigo) {
+		this.codigo = codigo;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public Integer getOficial() {
+		return oficial;
+	}
+
+	public void setOficial(Integer oficial) {
+		this.oficial = oficial;
+	}
+
+	public Long getTipoLogradouroId() {
+		return tipoLogradouroId;
+	}
+
+	public void setTipoLogradouroId(Long tipoLogradouroId) {
+		this.tipoLogradouroId = tipoLogradouroId;
+	}
+
+	public Integer getTituloLogradouroId() {
+		return tituloLogradouroId;
+	}
+
+	public void setTituloLogradouroId(Integer tituloLogradouroId) {
+		this.tituloLogradouroId = tituloLogradouroId;
+	}
+
+	public String getNome_Anterior() {
+		return nome_Anterior;
+	}
+
+	public void setNome_Anterior(String nome_Anterior) {
+		this.nome_Anterior = nome_Anterior;
+	}
+
+	public String getTpImovel() {
+		return tpImovel;
+	}
+
+	public void setTpImovel(String tpImovel) {
+		this.tpImovel = tpImovel;
+	}
+
+	public Integer getLogradouroFinalId() {
+		return logradouroFinalId;
+	}
+
+	public void setLogradouroFinalId(Integer logradouroFinalId) {
+		this.logradouroFinalId = logradouroFinalId;
+	}
+
+	public String getNomeAnterior() {
+		return nomeAnterior;
+	}
+
+	public void setNomeAnterior(String nomeAnterior) {
+		this.nomeAnterior = nomeAnterior;
+	}
+
+	public String getNumeroDocumentoLegal() {
+		return numeroDocumentoLegal;
+	}
+
+	public void setNumeroDocumentoLegal(String numeroDocumentoLegal) {
+		this.numeroDocumentoLegal = numeroDocumentoLegal;
+	}
+
+	public Timestamp getDataDocumentoLegal() {
+		return dataDocumentoLegal;
+	}
+
+	public void setDataDocumentoLegal(Timestamp dataDocumentoLegal) {
+		this.dataDocumentoLegal = dataDocumentoLegal;
+	}
+
+	public Integer getLimiteMetrico() {
+		return limiteMetrico;
+	}
+
+	public void setLimiteMetrico(Integer limiteMetrico) {
+		this.limiteMetrico = limiteMetrico;
+	}
+
+	public Boolean getLogradouroOficial() {
+		return logradouroOficial;
+	}
+
+	public void setLogradouroOficial(Boolean logradouroOficial) {
+		this.logradouroOficial = logradouroOficial;
+	}
+
+	public Integer getLogradouroInicialId() {
+		return logradouroInicialId;
+	}
+
+	public void setLogradouroInicialId(Integer logradouroInicialId) {
+		this.logradouroInicialId = logradouroInicialId;
+	}
+
+	public Integer getLogradouroGeoId() {
+		return logradouroGeoId;
+	}
+
+	public void setLogradouroGeoId(Integer logradouroGeoId) {
+		this.logradouroGeoId = logradouroGeoId;
+	}
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+
+	public String getComplemento() {
+		return complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
+	}
+
+	public Integer getMigracao_codigoCorreios() {
+		return migracao_codigoCorreios;
+	}
+
+	public void setMigracao_codigoCorreios(Integer migracao_codigoCorreios) {
+		this.migracao_codigoCorreios = migracao_codigoCorreios;
+	}
+
+	public Timestamp getDtInclusao() {
+		return dtInclusao;
+	}
+
+	public void setDtInclusao(Timestamp dtInclusao) {
+		this.dtInclusao = dtInclusao;
+	}
+
+	public Timestamp getDtAtualizacao() {
+		return dtAtualizacao;
+	}
+
+	public void setDtAtualizacao(Timestamp dtAtualizacao) {
+		this.dtAtualizacao = dtAtualizacao;
+	}
+
+	public Integer getUsuarioId() {
+		return usuarioId;
+	}
+
+	public void setUsuarioId(Integer usuarioId) {
+		this.usuarioId = usuarioId;
+	}
+
+	public MunicipioDTO getMunicipioDTO() {
+		return municipio;
+	}
+
+	public void setMunicipioDTO(MunicipioDTO municipio) {
+		this.municipio = municipio;
+	}
 }
