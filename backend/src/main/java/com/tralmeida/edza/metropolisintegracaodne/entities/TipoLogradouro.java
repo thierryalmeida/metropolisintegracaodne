@@ -17,6 +17,7 @@ public class TipoLogradouro implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
+	@Id
 	private Long tipoLogradouroId;
 	private String sigla;
 	private String descricao;

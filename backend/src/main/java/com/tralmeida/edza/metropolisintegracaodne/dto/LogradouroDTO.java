@@ -10,7 +10,7 @@ public class LogradouroDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Long logradouroId;
-	private Integer codigo;
+	private Long codigo;
 	private String nome;
 	private Integer oficial;
 	private Long tipoLogradouroId;
@@ -25,7 +25,7 @@ public class LogradouroDTO implements Serializable{
 	private Boolean logradouroOficial;
 	private Integer logradouroInicialId;
 	private Integer logradouroGeoId;
-	private String cep;
+	private Long cep;
 	private String complemento;
 	private Integer migracao_codigoCorreios;
 	private Timestamp dtInclusao;
@@ -64,10 +64,10 @@ public class LogradouroDTO implements Serializable{
 		this.municipio = new MunicipioDTO(entity.getMunicipio());
 	}
 	
-	public LogradouroDTO(Long logradouroId, Integer codigo, String nome, Integer oficial, Long tipoLogradouroId,
+	public LogradouroDTO(Long logradouroId, Long codigo, String nome, Integer oficial, Long tipoLogradouroId,
 			Integer tituloLogradouroId, String nome_Anterior, String tpImovel, Integer logradouroFinalId,
 			String nomeAnterior, String numeroDocumentoLegal, Timestamp dataDocumentoLegal, Integer limiteMetrico,
-			Boolean logradouroOficial, Integer logradouroInicialId, Integer logradouroGeoId, String cep,
+			Boolean logradouroOficial, Integer logradouroInicialId, Integer logradouroGeoId, Long cep,
 			String complemento, Integer migracao_codigoCorreios, Timestamp dtInclusao, Timestamp dtAtualizacao,
 			Integer usuarioId, MunicipioDTO municipio) {
 		super();
@@ -104,11 +104,11 @@ public class LogradouroDTO implements Serializable{
 		this.logradouroId = logradouroId;
 	}
 
-	public Integer getCodigo() {
+	public Long getCodigo() {
 		return codigo;
 	}
 
-	public void setCodigo(Integer codigo) {
+	public void setCodigo(Long codigo) {
 		this.codigo = codigo;
 	}
 
@@ -224,11 +224,11 @@ public class LogradouroDTO implements Serializable{
 		this.logradouroGeoId = logradouroGeoId;
 	}
 
-	public String getCep() {
+	public Long getCep() {
 		return cep;
 	}
 
-	public void setCep(String cep) {
+	public void setCep(Long cep) {
 		this.cep = cep;
 	}
 

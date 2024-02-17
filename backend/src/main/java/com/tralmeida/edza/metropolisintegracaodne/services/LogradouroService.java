@@ -1,10 +1,14 @@
 package com.tralmeida.edza.metropolisintegracaodne.services;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.tralmeida.edza.metropolisintegracaodne.constants.ConstantesEndereco;
 import com.tralmeida.edza.metropolisintegracaodne.dto.LogradouroDTO;
@@ -39,8 +43,10 @@ public class LogradouroService implements AddressObjectAssembler<LogradouroDTO>{
 			dto.getMunicipioDTO().setMunicipioId(ParseUtil.parseStringToLong(fields.get(2)));
 			dto.setNome(fields.get(5));
 			dto.setComplemento(fields.get(6));
-			dto.setCep(fields.get(7));
+			dto.setCep(ParseUtil.parseStringToLong(fields.get(7)));
 			dto.setOficial(ConstantesEndereco.OFICIAL);
+			dto.setCodigo(ParseUtil.parseStringToLong(fields.get(0)));
+			dto.setDtAtualizacao(new Timestamp(System.currentTimeMillis()));
 			
 			TipoLogradouro tipo = tipoLogradouroService.specialFindByDescricao(fields.get(8));
 			dto.setTipoLogradouroId(tipo.getTipoLogradouroId());
@@ -51,6 +57,7 @@ public class LogradouroService implements AddressObjectAssembler<LogradouroDTO>{
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public boolean saveAndMerge(LogradouroDTO entityDTO) {
 		Optional<Logradouro> optional = repository.findById(entityDTO.getLogradouroId());
 		
@@ -92,9 +99,6 @@ public class LogradouroService implements AddressObjectAssembler<LogradouroDTO>{
 		}
 		if(newLogradouro.getDataDocumentoLegal() != null) {
 			oldLogradouro.setDataDocumentoLegal(newLogradouro.getDataDocumentoLegal());
-		}
-		if(newLogradouro.getDtAtualizacao() != null) {
-			oldLogradouro.setDtAtualizacao(newLogradouro.getDtAtualizacao());
 		}
 		if(newLogradouro.getDtInclusao() != null) {
 			oldLogradouro.setDtInclusao(newLogradouro.getDtInclusao());
@@ -149,7 +153,7 @@ public class LogradouroService implements AddressObjectAssembler<LogradouroDTO>{
 		entity.setComplemento(entityDTO.getComplemento());
 		entity.setDataDocumentoLegal(entityDTO.getDataDocumentoLegal());
 		entity.setDtAtualizacao(entityDTO.getDtAtualizacao());
-		entity.setDtInclusao(entityDTO.getDtInclusao());
+		entity.setDtInclusao(new Timestamp(System.currentTimeMillis()));
 		entity.setLimiteMetrico(entityDTO.getLimiteMetrico());
 		entity.setLogradouroFinalId(entityDTO.getLogradouroFinalId());
 		entity.setLogradouroGeoId(entityDTO.getLogradouroGeoId());
