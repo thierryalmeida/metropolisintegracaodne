@@ -153,7 +153,7 @@ public class LogradouroService implements AddressObjectAssembler<LogradouroDTO>{
 		entity.setComplemento(entityDTO.getComplemento());
 		entity.setDataDocumentoLegal(entityDTO.getDataDocumentoLegal());
 		entity.setDtAtualizacao(entityDTO.getDtAtualizacao());
-		entity.setDtInclusao(new Timestamp(System.currentTimeMillis()));
+		entity.setDtInclusao(entityDTO.getDtAtualizacao());
 		entity.setLimiteMetrico(entityDTO.getLimiteMetrico());
 		entity.setLogradouroFinalId(entityDTO.getLogradouroFinalId());
 		entity.setLogradouroGeoId(entityDTO.getLogradouroGeoId());
