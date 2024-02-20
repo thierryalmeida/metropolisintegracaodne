@@ -1,7 +1,6 @@
 package com.tralmeida.edza.metropolisintegracaodne.services;
 
 import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +10,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tralmeida.edza.metropolisintegracaodne.constants.ConstantesEndereco;
+import com.tralmeida.edza.metropolisintegracaodne.dto.BairroDTO;
+import com.tralmeida.edza.metropolisintegracaodne.dto.BairroLogradouroDTO;
 import com.tralmeida.edza.metropolisintegracaodne.dto.LogradouroDTO;
 import com.tralmeida.edza.metropolisintegracaodne.dto.MunicipioDTO;
 import com.tralmeida.edza.metropolisintegracaodne.entities.Logradouro;
@@ -32,6 +33,9 @@ public class LogradouroService implements AddressObjectAssembler<LogradouroDTO>{
 	MunicipioRepository municipioRepository;
 	
 	@Autowired
+	BairroLogradouroService bairroLogradouroService;
+	
+	@Autowired
 	TipoLogradouroService tipoLogradouroService;
 
 	@Override
@@ -41,6 +45,7 @@ public class LogradouroService implements AddressObjectAssembler<LogradouroDTO>{
 			dto.setLogradouroId(ParseUtil.parseStringToLong(fields.get(0)));
 			dto.setMunicipioDTO(new MunicipioDTO());
 			dto.getMunicipioDTO().setMunicipioId(ParseUtil.parseStringToLong(fields.get(2)));
+			dto.setBairroId(ParseUtil.parseStringToLong(fields.get(3)));
 			dto.setNome(fields.get(5));
 			dto.setComplemento(fields.get(6));
 			dto.setCep(ParseUtil.parseStringToLong(fields.get(7)));
@@ -69,7 +74,19 @@ public class LogradouroService implements AddressObjectAssembler<LogradouroDTO>{
 		}
 		entity = repository.saveAndFlush(entity);
 		
+		BairroLogradouroDTO bairroLogradouroDTO = new BairroLogradouroDTO();
+		bairroLogradouroDTO.setBairro(new BairroDTO());
+		bairroLogradouroDTO.getBairro().setBairroId(entityDTO.getBairroId());
+		bairroLogradouroDTO.setLogradouro(entityDTO);
+		verifyBairroLogradouro(bairroLogradouroDTO);
+		
 		return new LogradouroDTO(entity) != null;
+	}
+	
+	private void verifyBairroLogradouro(BairroLogradouroDTO bairroLogradouroDTO) {
+		if(!bairroLogradouroService.exists(bairroLogradouroDTO)) {
+			bairroLogradouroService.saveAndFlush(bairroLogradouroDTO);
+		}
 	}
 	
 	private Logradouro mergeEntityToUpdate(LogradouroDTO newLogradouro, Logradouro oldLogradouro) {

@@ -8,7 +8,7 @@ public class BairroLogradouroDTO implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	private Integer bairroogradouroId;
+	private Long bairroLogradouroId;
 	private BairroDTO bairro;
 	private LogradouroDTO logradouro;
 	
@@ -16,24 +16,24 @@ public class BairroLogradouroDTO implements Serializable{
 	}
 	
 	public BairroLogradouroDTO(BairroLogradouro entity) {
-		this.bairroogradouroId = entity.getBairroogradouroId();
+		this.bairroLogradouroId = entity.getBairroLogradouroId();
 		this.bairro = new BairroDTO(entity.getBairro());
 		this.logradouro = new LogradouroDTO(entity.getLogradouro());
 	}
 	
-	public BairroLogradouroDTO(Integer bairroogradouroId, BairroDTO bairro, LogradouroDTO logradouro) {
+	public BairroLogradouroDTO(Long bairroLogradouroId, BairroDTO bairro, LogradouroDTO logradouro) {
 		super();
-		this.bairroogradouroId = bairroogradouroId;
+		this.bairroLogradouroId = bairroLogradouroId;
 		this.bairro = bairro;
 		this.logradouro = logradouro;
 	}
 
-	public Integer getBairroogradouroId() {
-		return bairroogradouroId;
+	public Long getBairroLogradouroId() {
+		return bairroLogradouroId;
 	}
 
-	public void setBairroogradouroId(Integer bairroogradouroId) {
-		this.bairroogradouroId = bairroogradouroId;
+	public void setBairroogradouroId(Long bairroLogradouroId) {
+		this.bairroLogradouroId = bairroLogradouroId;
 	}
 
 	public BairroDTO getBairro() {

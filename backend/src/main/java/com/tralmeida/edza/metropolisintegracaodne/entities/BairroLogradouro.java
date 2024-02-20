@@ -4,10 +4,13 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.TableGenerator;
 
 @Entity
 @Table(name = "cg_bairrologradouro")
@@ -15,8 +18,12 @@ public class BairroLogradouro implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
+	@TableGenerator(name = "seq_metropolis", table = "seq_block",
+			pkColumnName = "name", valueColumnName = "idx", pkColumnValue = "public.cg_bairrologradouro.bairrologradouroid",
+			initialValue = 0, allocationSize = 1)
 	@Id
-	private Integer bairroogradouroId;
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "seq_metropolis")
+	private Long bairroLogradouroId;
 	
 	@ManyToOne
 	@JoinColumn(name = "bairroId")
@@ -29,19 +36,19 @@ public class BairroLogradouro implements Serializable{
 	public BairroLogradouro() {
 	}
 
-	public BairroLogradouro(Integer bairroogradouroId, Bairro bairro, Logradouro logradouro) {
+	public BairroLogradouro(Long bairroLogradouroId, Bairro bairro, Logradouro logradouro) {
 		super();
-		this.bairroogradouroId = bairroogradouroId;
+		this.bairroLogradouroId = bairroLogradouroId;
 		this.bairro = bairro;
 		this.logradouro = logradouro;
 	}
 
-	public Integer getBairroogradouroId() {
-		return bairroogradouroId;
+	public Long getBairroLogradouroId() {
+		return bairroLogradouroId;
 	}
 
-	public void setBairroogradouroId(Integer bairroogradouroId) {
-		this.bairroogradouroId = bairroogradouroId;
+	public void setBairroogradouroId(Long bairroLogradouroId) {
+		this.bairroLogradouroId = bairroLogradouroId;
 	}
 
 	public Bairro getBairro() {
@@ -62,7 +69,7 @@ public class BairroLogradouro implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(bairroogradouroId);
+		return Objects.hash(bairroLogradouroId);
 	}
 
 	@Override
@@ -74,6 +81,6 @@ public class BairroLogradouro implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		BairroLogradouro other = (BairroLogradouro) obj;
-		return Objects.equals(bairroogradouroId, other.bairroogradouroId);
+		return Objects.equals(bairroLogradouroId, other.bairroLogradouroId);
 	}
 }

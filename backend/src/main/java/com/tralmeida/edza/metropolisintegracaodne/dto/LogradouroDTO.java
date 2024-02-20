@@ -32,6 +32,8 @@ public class LogradouroDTO implements Serializable{
 	private Timestamp dtAtualizacao;
 	private Integer usuarioId;
 	
+	private Long bairroId;
+	
 	private MunicipioDTO municipio;
 	
 	public LogradouroDTO() {
@@ -278,5 +280,13 @@ public class LogradouroDTO implements Serializable{
 
 	public void setMunicipioDTO(MunicipioDTO municipio) {
 		this.municipio = municipio;
+	}
+
+	public Long getBairroId() {
+		return bairroId;
+	}
+
+	public void setBairroId(Long bairroId) {
+		this.bairroId = bairroId;
 	}
 }
