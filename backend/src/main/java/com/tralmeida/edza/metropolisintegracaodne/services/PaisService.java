@@ -43,6 +43,9 @@ public class PaisService implements AddressObjectAssembler<PaisDTO>{
 		} else {
 			entity = getEntityByDTO(pais);
 		}
+		entity = repository.saveAndFlush(entity);
+		entity.setCodigo(entity.getPaisId());
+		
 		return new PaisDTO(repository.saveAndFlush(entity)) != null;
 	}
 	
@@ -56,6 +59,9 @@ public class PaisService implements AddressObjectAssembler<PaisDTO>{
 		if(newPais.getPaisId() != null) {
 			oldPais.setPaisId(newPais.getPaisId());
 		}
+		if(newPais.getCodigo() != null) {
+			oldPais.setCodigo(newPais.getCodigo());
+		}
 		if(newPais.getSigla() != null) {
 			oldPais.setSigla(newPais.getSigla());
 		}
@@ -65,6 +71,7 @@ public class PaisService implements AddressObjectAssembler<PaisDTO>{
 	private Pais getEntityByDTO(PaisDTO dto) {
 		Pais entity = new Pais();
 		entity.setPaisId(dto.getPaisId());
+		entity.setCodigo(dto.getCodigo());
 		entity.setSigla(dto.getSigla());
 		entity.setNome(dto.getNome());
 		entity.setNacionalidade(dto.getNacionalidade());

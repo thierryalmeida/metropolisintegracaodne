@@ -9,6 +9,7 @@ public class PaisDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Long paisId;
+	private Long codigo;
 	private String sigla;
 	private String nome;
 	private String nacionalidade;
@@ -61,5 +62,13 @@ public class PaisDTO implements Serializable{
 
 	public void setNacionalidade(String nacionalidade) {
 		this.nacionalidade = nacionalidade;
+	}
+
+	public Long getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(Long codigo) {
+		this.codigo = codigo;
 	}
 }

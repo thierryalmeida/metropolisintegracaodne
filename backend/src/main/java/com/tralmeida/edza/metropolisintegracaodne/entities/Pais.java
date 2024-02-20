@@ -23,6 +23,7 @@ public class Pais implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "seq_metropolis")
 	private Long paisId;
+	
 	private Long codigo;
 	private String sigla;
 	private String nome;
