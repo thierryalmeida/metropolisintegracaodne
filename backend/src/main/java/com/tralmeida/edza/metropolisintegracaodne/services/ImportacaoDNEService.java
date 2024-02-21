@@ -16,6 +16,7 @@ import com.tralmeida.edza.metropolisintegracaodne.entityassemblers.AddressObject
 import com.tralmeida.edza.metropolisintegracaodne.enums.TableEnum;
 import com.tralmeida.edza.metropolisintegracaodne.filereaders.DNEDelimitadoFileReader;
 import com.tralmeida.edza.metropolisintegracaodne.repositories.ImportacaoDNERepository;
+import com.tralmeida.edza.metropolisintegracaodne.repositories.StatusImportacaoRepository;
 import com.tralmeida.edza.metropolisintegracaodne.repositories.TabelaImportacaoRepository;
 import com.tralmeida.edza.metropolisintegracaodne.services.exceptions.AddressEntityNotFoundException;
 
@@ -27,6 +28,9 @@ public class ImportacaoDNEService {
 	
 	@Autowired
 	private TabelaImportacaoRepository tabelaImportacaoRepository;
+	
+	@Autowired
+	private StatusImportacaoRepository statusImportacaoRepository;
 	
 	@Autowired
 	private PaisService paisAssembler;
@@ -54,14 +58,15 @@ public class ImportacaoDNEService {
 		AddressObjectAssembler<?> entityAssembler = getAddressEntityAssemblerByIdTabela(dto.getTabelaImportacaoDTO().getTabelaImportacaoId());
 		DNEDelimitadoFileReader fileReader = new DNEDelimitadoFileReader(multipartFile, entityAssembler);
 		
+		ImportacaoDNE entity = copyDTOToEntity(dto);
+		entity.setDataImportacao(new Timestamp(System.currentTimeMillis()));
 		Long registrosImportados = 0L;
 		try {
 			registrosImportados = fileReader.insertEntities();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		ImportacaoDNE entity = copyDTOToEntity(dto);
-		entity.setDataImportacao(new Timestamp(System.currentTimeMillis()));
+		
 		entity.setRegistrosLidos(fileReader.getLinesRead());
 		entity.setRegistrosImportados(registrosImportados);
 		entity = repository.save(entity);
@@ -72,6 +77,7 @@ public class ImportacaoDNEService {
 	private ImportacaoDNE copyDTOToEntity(ImportacaoDNEDTO dto) {
 		ImportacaoDNE entity = new ImportacaoDNE();
 		entity.setDescricao(dto.getDescricao());
+		entity.setStatusImportacao(statusImportacaoRepository.getReferenceById(dto.getStatusImportacaoDTO().getStatusImportacaoId()));
 		entity.setTabelaImportacao(tabelaImportacaoRepository.getReferenceById(dto.getTabelaImportacaoDTO().getTabelaImportacaoId()));
 		
 		return entity;
@@ -79,11 +85,11 @@ public class ImportacaoDNEService {
 	
 	private AddressObjectAssembler<?> getAddressEntityAssemblerByIdTabela(Long idTabela) throws AddressEntityNotFoundException{
 		HashMap<Long, AddressObjectAssembler<?>> assemblerMap = new HashMap<>();
-		assemblerMap.put(TableEnum.ID_TABELA_PAIS, paisAssembler);
-		assemblerMap.put(TableEnum.ID_TABELA_UF, ufAssembler);
-		assemblerMap.put(TableEnum.ID_TABELA_MUNICIPIO, municipioAssembler);
-		assemblerMap.put(TableEnum.ID_TABELA_BAIRRO, bairroAssembler);
-		assemblerMap.put(TableEnum.ID_TABELA_LOGRADOURO, logradouroAssembler);
+		assemblerMap.put(TableEnum.TABELA_PAIS.getTabelaImportacaoId(), paisAssembler);
+		assemblerMap.put(TableEnum.TABELA_UF.getTabelaImportacaoId(), ufAssembler);
+		assemblerMap.put(TableEnum.TABELA_MUNICIPIO.getTabelaImportacaoId(), municipioAssembler);
+		assemblerMap.put(TableEnum.TABELA_BAIRRO.getTabelaImportacaoId(), bairroAssembler);
+		assemblerMap.put(TableEnum.TABELA_LOGRADOURO.getTabelaImportacaoId(), logradouroAssembler);
 		
 		AddressObjectAssembler<?> assembler = assemblerMap.get(idTabela);
 		if(assembler != null) {

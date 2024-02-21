@@ -1,6 +1,7 @@
 package com.tralmeida.edza.metropolisintegracaodne.entities;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
@@ -26,6 +27,12 @@ public class Bairro implements Serializable{
 	private String tipo;
 	private Long cepInicial;
 	private Long cepFinal;
+	private Timestamp dtInclusao;
+	private Timestamp dtAtualizacao;
+	
+	@ManyToOne
+	@JoinColumn(name = "importacaodneid")
+	private ImportacaoDNE importacaoDNE;
 	
 	@ManyToOne
 	@JoinColumn(name = "municipioid")
@@ -127,6 +134,30 @@ public class Bairro implements Serializable{
 
 	public void setMunicipio(Municipio municipio) {
 		this.municipio = municipio;
+	}
+
+	public Timestamp getDtInclusao() {
+		return dtInclusao;
+	}
+
+	public void setDtInclusao(Timestamp dtInclusao) {
+		this.dtInclusao = dtInclusao;
+	}
+
+	public Timestamp getDtAtualizacao() {
+		return dtAtualizacao;
+	}
+
+	public void setDtAtualizacao(Timestamp dtAtualizacao) {
+		this.dtAtualizacao = dtAtualizacao;
+	}
+
+	public ImportacaoDNE getImportacaoDNE() {
+		return importacaoDNE;
+	}
+
+	public void setImportacaoDNE(ImportacaoDNE importacaoDNE) {
+		this.importacaoDNE = importacaoDNE;
 	}
 
 	@Override

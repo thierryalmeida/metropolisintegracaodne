@@ -15,9 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.tralmeida.edza.metropolisintegracaodne.dto.ImportacaoDNEDTO;
+import com.tralmeida.edza.metropolisintegracaodne.dto.StatusImportacaoDTO;
 import com.tralmeida.edza.metropolisintegracaodne.dto.TabelaImportacaoDTO;
 import com.tralmeida.edza.metropolisintegracaodne.entities.ImportacaoDNE;
 import com.tralmeida.edza.metropolisintegracaodne.entities.TabelaImportacao;
+import com.tralmeida.edza.metropolisintegracaodne.enums.ImportFile;
+import com.tralmeida.edza.metropolisintegracaodne.enums.StatusImportacaoEnum;
 import com.tralmeida.edza.metropolisintegracaodne.services.ImportacaoDNEService;
 
 @RestController
@@ -48,6 +51,8 @@ public class ImportacaoDNEController {
 		dto.setDescricao(descricao);
 		dto.setTabelaImportacaoDTO(new TabelaImportacaoDTO());
 		dto.getTabelaImportacaoDTO().setTabelaImportacaoId(idTabela);
+		dto.setStatusImportacaoDTO(new StatusImportacaoDTO());
+		dto.getStatusImportacaoDTO().setStatusImportacaoId(StatusImportacaoEnum.EM_ANDAMENTO.getStatusImportacaoId());
 		
 		return dto;
 	}

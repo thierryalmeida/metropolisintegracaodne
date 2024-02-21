@@ -27,6 +27,10 @@ public class ImportacaoDNE implements Serializable{
 	private Long registrosImportados;
 	
 	@ManyToOne
+	@JoinColumn(name = "statusimportacaoid")
+	private StatusImportacao statusImportacao;
+	
+	@ManyToOne
 	@JoinColumn(name = "tabelaimportacaoid")
 	private TabelaImportacao tabelaImportacao;
 	
@@ -87,6 +91,14 @@ public class ImportacaoDNE implements Serializable{
 
 	public void setRegistrosImportados(Long registrosImportados) {
 		this.registrosImportados = registrosImportados;
+	}
+
+	public StatusImportacao getStatusImportacao() {
+		return statusImportacao;
+	}
+
+	public void setStatusImportacao(StatusImportacao statusImportacao) {
+		this.statusImportacao = statusImportacao;
 	}
 
 	@Override

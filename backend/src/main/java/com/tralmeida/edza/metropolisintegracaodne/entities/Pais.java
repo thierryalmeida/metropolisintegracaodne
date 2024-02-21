@@ -1,13 +1,15 @@
 package com.tralmeida.edza.metropolisintegracaodne.entities;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.TableGenerator;
 
@@ -28,6 +30,12 @@ public class Pais implements Serializable{
 	private String sigla;
 	private String nome;
 	private String nacionalidade;
+	private Timestamp dtInclusao;
+	private Timestamp dtAtualizacao;
+	
+	@ManyToOne
+	@JoinColumn(name = "importacaodneid")
+	private ImportacaoDNE importacaoDNE;
 	
 	public Pais() {
 	}
@@ -70,6 +78,30 @@ public class Pais implements Serializable{
 
 	public void setNacionalidade(String nacionalidade) {
 		this.nacionalidade = nacionalidade;
+	}
+
+	public Timestamp getDtInclusao() {
+		return dtInclusao;
+	}
+
+	public void setDtInclusao(Timestamp dtInclusao) {
+		this.dtInclusao = dtInclusao;
+	}
+
+	public Timestamp getDtAtualizacao() {
+		return dtAtualizacao;
+	}
+
+	public void setDtAtualizacao(Timestamp dtAtualizacao) {
+		this.dtAtualizacao = dtAtualizacao;
+	}
+
+	public ImportacaoDNE getImportacaoDNE() {
+		return importacaoDNE;
+	}
+
+	public void setImportacaoDNE(ImportacaoDNE importacaoDNE) {
+		this.importacaoDNE = importacaoDNE;
 	}
 
 	@Override

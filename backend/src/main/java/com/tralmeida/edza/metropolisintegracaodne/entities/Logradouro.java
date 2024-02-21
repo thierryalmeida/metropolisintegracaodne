@@ -39,9 +39,14 @@ public class Logradouro implements Serializable{
 	private Long cep;
 	private String complemento;
 	private Integer migracao_codigoCorreios;
+	private Integer usuarioId;
 	private Timestamp dtInclusao;
 	private Timestamp dtAtualizacao;
-	private Integer usuarioId;
+	
+	@ManyToOne
+	@JoinColumn(name = "importacaodneid")
+	private ImportacaoDNE importacaoDNE;
+	
 	
 	@ManyToOne
 	@JoinColumn(name = "municipioid")
@@ -267,6 +272,14 @@ public class Logradouro implements Serializable{
 
 	public void setMunicipio(Municipio municipio) {
 		this.municipio = municipio;
+	}
+
+	public ImportacaoDNE getImportacaoDNE() {
+		return importacaoDNE;
+	}
+
+	public void setImportacaoDNE(ImportacaoDNE importacaoDNE) {
+		this.importacaoDNE = importacaoDNE;
 	}
 
 	@Override

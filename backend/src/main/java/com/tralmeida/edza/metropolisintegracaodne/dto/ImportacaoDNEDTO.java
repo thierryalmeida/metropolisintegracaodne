@@ -13,6 +13,7 @@ public class ImportacaoDNEDTO implements Serializable{
 	private String descricao;
 	private Timestamp dataImportacao;
 	private TabelaImportacaoDTO tabelaImportacaoDTO;
+	private StatusImportacaoDTO statusImportacaoDTO;
 	private Long registrosLidos;
 	private Long registrosImportados;
 	
@@ -85,5 +86,13 @@ public class ImportacaoDNEDTO implements Serializable{
 
 	public void setRegistrosImportados(Long registrosImportados) {
 		this.registrosImportados = registrosImportados;
+	}
+
+	public StatusImportacaoDTO getStatusImportacaoDTO() {
+		return statusImportacaoDTO;
+	}
+
+	public void setStatusImportacaoDTO(StatusImportacaoDTO statusImportacaoDTO) {
+		this.statusImportacaoDTO = statusImportacaoDTO;
 	}
 }
