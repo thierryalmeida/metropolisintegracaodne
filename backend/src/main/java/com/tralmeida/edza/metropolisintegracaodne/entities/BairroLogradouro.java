@@ -3,6 +3,7 @@ package com.tralmeida.edza.metropolisintegracaodne.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,11 +26,11 @@ public class BairroLogradouro implements Serializable{
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "seq_metropolis")
 	private Long bairroLogradouroId;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "bairroId")
 	private Bairro bairro;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "logradouroId")
 	private Logradouro logradouro;
 	

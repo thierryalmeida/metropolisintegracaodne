@@ -62,8 +62,15 @@ public class LogradouroService implements AddressObjectAssembler<LogradouroDTO>{
 	}
 
 	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public boolean saveAndMerge(LogradouroDTO entityDTO) {
+		LogradouroDTO dto = saveAndMergeLogradouro(entityDTO);
+		verifyAndSaveBairroLogradouro(entityDTO.getBairroId(), dto.getLogradouroId());
+
+		return dto != null;
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	private LogradouroDTO saveAndMergeLogradouro(LogradouroDTO entityDTO) {
 		Optional<Logradouro> optional = repository.findById(entityDTO.getLogradouroId());
 		
 		Logradouro entity = new Logradouro();
@@ -74,17 +81,18 @@ public class LogradouroService implements AddressObjectAssembler<LogradouroDTO>{
 		}
 		entity = repository.saveAndFlush(entity);
 		
-		BairroLogradouroDTO bairroLogradouroDTO = new BairroLogradouroDTO();
-		bairroLogradouroDTO.setBairro(new BairroDTO());
-		bairroLogradouroDTO.getBairro().setBairroId(entityDTO.getBairroId());
-		bairroLogradouroDTO.setLogradouro(entityDTO);
-		verifyBairroLogradouro(bairroLogradouroDTO);
-		
-		return new LogradouroDTO(entity) != null;
+		return new LogradouroDTO(entity);
 	}
 	
-	private void verifyBairroLogradouro(BairroLogradouroDTO bairroLogradouroDTO) {
-		if(!bairroLogradouroService.exists(bairroLogradouroDTO)) {
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	private void verifyAndSaveBairroLogradouro(Long bairroId, Long logradouroId) {
+		if(!bairroLogradouroService.existsByBairroIdAndLogradouroId(bairroId, logradouroId)) {
+			BairroLogradouroDTO bairroLogradouroDTO = new BairroLogradouroDTO();
+			bairroLogradouroDTO.setBairro(new BairroDTO());
+			bairroLogradouroDTO.getBairro().setBairroId(bairroId);
+			bairroLogradouroDTO.setLogradouro(new LogradouroDTO());
+			bairroLogradouroDTO.getLogradouro().setLogradouroId(logradouroId);
+			
 			bairroLogradouroService.saveAndFlush(bairroLogradouroDTO);
 		}
 	}
@@ -150,6 +158,7 @@ public class LogradouroService implements AddressObjectAssembler<LogradouroDTO>{
 		if(newLogradouro.getUsuarioId() != null) {
 			oldLogradouro.setUsuarioId(newLogradouro.getUsuarioId());
 		}
+		oldLogradouro.setDtAtualizacao(newLogradouro.getDtAtualizacao());
 		if(newLogradouro.getMunicipioDTO() != null && newLogradouro.getMunicipioDTO().getMunicipioId() != null) {
 			Optional<Municipio> municipio = municipioRepository.findById(newLogradouro.getMunicipioDTO().getMunicipioId());
 			oldLogradouro.setMunicipio(municipio.get());
