@@ -14,6 +14,7 @@ import com.tralmeida.edza.metropolisintegracaodne.dto.BairroDTO;
 import com.tralmeida.edza.metropolisintegracaodne.dto.BairroLogradouroDTO;
 import com.tralmeida.edza.metropolisintegracaodne.dto.LogradouroDTO;
 import com.tralmeida.edza.metropolisintegracaodne.dto.MunicipioDTO;
+import com.tralmeida.edza.metropolisintegracaodne.entities.ImportacaoDNE;
 import com.tralmeida.edza.metropolisintegracaodne.entities.Logradouro;
 import com.tralmeida.edza.metropolisintegracaodne.entities.Municipio;
 import com.tralmeida.edza.metropolisintegracaodne.entities.TipoLogradouro;
@@ -39,7 +40,7 @@ public class LogradouroService implements AddressObjectAssembler<LogradouroDTO>{
 	TipoLogradouroService tipoLogradouroService;
 
 	@Override
-	public Optional<LogradouroDTO> toAssemble(List<String> fields, ImportFile importFile) {
+	public Optional<LogradouroDTO> toAssemble(List<String> fields, ImportFile importFile, Long importacaoId) {
 		LogradouroDTO dto = new LogradouroDTO();
 		if(importFile.toString().substring(0, 14).equals("LOG_LOGRADOURO")) {
 			dto.setLogradouroId(ParseUtil.parseStringToLong(fields.get(0)));
@@ -52,6 +53,7 @@ public class LogradouroService implements AddressObjectAssembler<LogradouroDTO>{
 			dto.setOficial(ConstantesEndereco.OFICIAL);
 			dto.setCodigo(ParseUtil.parseStringToLong(fields.get(0)));
 			dto.setDtAtualizacao(new Timestamp(System.currentTimeMillis()));
+			dto.setImportacaoId(importacaoId);
 			
 			TipoLogradouro tipo = tipoLogradouroService.specialFindByDescricao(fields.get(8));
 			dto.setTipoLogradouroId(tipo.getTipoLogradouroId());
@@ -64,7 +66,7 @@ public class LogradouroService implements AddressObjectAssembler<LogradouroDTO>{
 	@Override
 	public boolean saveAndMerge(LogradouroDTO entityDTO) {
 		LogradouroDTO dto = saveAndMergeLogradouro(entityDTO);
-		verifyAndSaveBairroLogradouro(entityDTO.getBairroId(), dto.getLogradouroId());
+		verifyAndSaveBairroLogradouro(entityDTO.getBairroId(), dto.getLogradouroId(), entityDTO.getImportacaoId());
 
 		return dto != null;
 	}
@@ -85,13 +87,14 @@ public class LogradouroService implements AddressObjectAssembler<LogradouroDTO>{
 	}
 	
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	private void verifyAndSaveBairroLogradouro(Long bairroId, Long logradouroId) {
+	private void verifyAndSaveBairroLogradouro(Long bairroId, Long logradouroId, Long importacaoId) {
 		if(!bairroLogradouroService.existsByBairroIdAndLogradouroId(bairroId, logradouroId)) {
 			BairroLogradouroDTO bairroLogradouroDTO = new BairroLogradouroDTO();
 			bairroLogradouroDTO.setBairro(new BairroDTO());
 			bairroLogradouroDTO.getBairro().setBairroId(bairroId);
 			bairroLogradouroDTO.setLogradouro(new LogradouroDTO());
 			bairroLogradouroDTO.getLogradouro().setLogradouroId(logradouroId);
+			bairroLogradouroDTO.setImportacaoId(importacaoId);
 			
 			bairroLogradouroService.saveAndFlush(bairroLogradouroDTO);
 		}
@@ -159,6 +162,9 @@ public class LogradouroService implements AddressObjectAssembler<LogradouroDTO>{
 			oldLogradouro.setUsuarioId(newLogradouro.getUsuarioId());
 		}
 		oldLogradouro.setDtAtualizacao(newLogradouro.getDtAtualizacao());
+		oldLogradouro.setImportacaoDNE(new ImportacaoDNE());
+		oldLogradouro.getImportacaoDNE().setImportacaoId(newLogradouro.getImportacaoId());
+		
 		if(newLogradouro.getMunicipioDTO() != null && newLogradouro.getMunicipioDTO().getMunicipioId() != null) {
 			Optional<Municipio> municipio = municipioRepository.findById(newLogradouro.getMunicipioDTO().getMunicipioId());
 			oldLogradouro.setMunicipio(municipio.get());
@@ -190,6 +196,8 @@ public class LogradouroService implements AddressObjectAssembler<LogradouroDTO>{
 		entity.setTipoLogradouroId(entityDTO.getTipoLogradouroId());
 		entity.setTituloLogradouroId(entityDTO.getTituloLogradouroId());
 		entity.setUsuarioId(entityDTO.getUsuarioId());
+		entity.setImportacaoDNE(new ImportacaoDNE());
+		entity.getImportacaoDNE().setImportacaoId(entityDTO.getImportacaoId());
 		
 		if(entityDTO.getMunicipioDTO() != null && entityDTO.getMunicipioDTO().getMunicipioId() != null) {
 			Optional<Municipio> municipio = municipioRepository.findById(entityDTO.getMunicipioDTO().getMunicipioId());

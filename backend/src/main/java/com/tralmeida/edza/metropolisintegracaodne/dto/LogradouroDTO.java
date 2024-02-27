@@ -33,6 +33,7 @@ public class LogradouroDTO implements Serializable{
 	private Integer usuarioId;
 	
 	private Long bairroId;
+	private Long importacaoId;
 	
 	private MunicipioDTO municipio;
 	
@@ -288,5 +289,13 @@ public class LogradouroDTO implements Serializable{
 
 	public void setBairroId(Long bairroId) {
 		this.bairroId = bairroId;
+	}
+
+	public Long getImportacaoId() {
+		return importacaoId;
+	}
+
+	public void setImportacaoId(Long importacaoId) {
+		this.importacaoId = importacaoId;
 	}
 }

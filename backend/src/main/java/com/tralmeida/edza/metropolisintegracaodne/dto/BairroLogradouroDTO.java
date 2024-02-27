@@ -12,6 +12,8 @@ public class BairroLogradouroDTO implements Serializable{
 	private BairroDTO bairro;
 	private LogradouroDTO logradouro;
 	
+	private Long importacaoId;
+	
 	public BairroLogradouroDTO() {
 	}
 	
@@ -50,5 +52,13 @@ public class BairroLogradouroDTO implements Serializable{
 
 	public void setLogradouro(LogradouroDTO logradouro) {
 		this.logradouro = logradouro;
+	}
+
+	public Long getImportacaoId() {
+		return importacaoId;
+	}
+
+	public void setImportacaoId(Long importacaoId) {
+		this.importacaoId = importacaoId;
 	}
 }

@@ -28,7 +28,7 @@ public class UnidadeFederativaService implements AddressObjectAssembler<UnidadeF
 	private PaisRepository paisRepository;
 
 	@Override
-	public Optional<UnidadeFederativaDTO> toAssemble(List<String> fields, ImportFile importFile) {
+	public Optional<UnidadeFederativaDTO> toAssemble(List<String> fields, ImportFile importFile, Long importacaoId) {
 		UnidadeFederativaDTO ufDTO = new UnidadeFederativaDTO();
 		if(importFile.equals(ImportFile.LOG_FAIXA_UF)) {
 			ufDTO.setSigla(fields.get(0));

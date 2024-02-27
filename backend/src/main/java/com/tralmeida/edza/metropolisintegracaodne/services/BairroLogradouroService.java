@@ -6,11 +6,11 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tralmeida.edza.metropolisintegracaodne.dto.BairroLogradouroDTO;
-import com.tralmeida.edza.metropolisintegracaodne.entities.Bairro;
 import com.tralmeida.edza.metropolisintegracaodne.entities.BairroLogradouro;
-import com.tralmeida.edza.metropolisintegracaodne.entities.Logradouro;
+import com.tralmeida.edza.metropolisintegracaodne.entities.ImportacaoDNE;
 import com.tralmeida.edza.metropolisintegracaodne.repositories.BairroLogradouroRepository;
 import com.tralmeida.edza.metropolisintegracaodne.repositories.BairroRepository;
+import com.tralmeida.edza.metropolisintegracaodne.repositories.ImportacaoDNERepository;
 import com.tralmeida.edza.metropolisintegracaodne.repositories.LogradouroRepository;
 
 @Service
@@ -24,6 +24,9 @@ public class BairroLogradouroService {
 	
 	@Autowired
 	LogradouroRepository logradouroRepository;
+	
+	@Autowired
+	ImportacaoDNERepository importacaoDNERepository;
 	
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public BairroLogradouro saveAndFlush(BairroLogradouroDTO bairroLogradouroDTO) {
@@ -39,9 +42,10 @@ public class BairroLogradouroService {
 	private BairroLogradouro getEntityByDTO(BairroLogradouroDTO dto) {
 		BairroLogradouro entity = new BairroLogradouro();
 		entity.setBairro(bairroRepository.getReferenceById(dto.getBairro().getBairroId()));
-		//entity.getBairro().setBairroId(dto.getBairro().getBairroId());
 		entity.setLogradouro(logradouroRepository.getReferenceById(dto.getLogradouro().getLogradouroId()));
-		//entity.getLogradouro().setLogradouroId(dto.getLogradouro().getLogradouroId());
+		entity.setImportacaoDNE(importacaoDNERepository.getReferenceById(dto.getImportacaoId()));
+		//entity.setImportacaoDNE(new ImportacaoDNE());
+		//entity.getImportacaoDNE().setImportacaoId(dto.getImportacaoId());
 		
 		return entity;
 	}

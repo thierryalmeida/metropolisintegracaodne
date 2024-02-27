@@ -29,7 +29,7 @@ public class BairroService implements AddressObjectAssembler<BairroDTO>{
 	private MunicipioRepository municipioRepository;
 	
 	@Override
-	public Optional<BairroDTO> toAssemble(List<String> fields, ImportFile importFile) {
+	public Optional<BairroDTO> toAssemble(List<String> fields, ImportFile importFile, Long importacaoId) {
 		BairroDTO dto = new BairroDTO();
 		if(importFile.equals(ImportFile.LOG_BAIRRO)) {
 			dto.setBairroId(ParseUtil.parseStringToLong(fields.get(0)));

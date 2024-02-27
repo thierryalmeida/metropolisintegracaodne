@@ -7,6 +7,6 @@ import com.tralmeida.edza.metropolisintegracaodne.enums.ImportFile;
 
 public interface AddressObjectAssembler<T> {
 	
-	Optional<T> toAssemble(List<String> fields, ImportFile file);
+	Optional<T> toAssemble(List<String> fields, ImportFile file, Long importacaoId);
 	boolean saveAndMerge(T entity);
 }

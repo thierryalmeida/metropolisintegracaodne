@@ -14,6 +14,8 @@ public class PaisDTO implements Serializable{
 	private String nome;
 	private String nacionalidade;
 	
+	private Long importacaoId;
+	
 	public PaisDTO() {
 	}
 	
@@ -70,5 +72,13 @@ public class PaisDTO implements Serializable{
 
 	public void setCodigo(Long codigo) {
 		this.codigo = codigo;
+	}
+
+	public Long getImportacaoId() {
+		return importacaoId;
+	}
+
+	public void setImportacaoId(Long importacaoId) {
+		this.importacaoId = importacaoId;
 	}
 }

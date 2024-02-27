@@ -21,7 +21,7 @@ public class PaisService implements AddressObjectAssembler<PaisDTO>{
 	private PaisRepository repository;
 	
 	@Override
-	public Optional<PaisDTO> toAssemble(List<String> fields, ImportFile importFile) {
+	public Optional<PaisDTO> toAssemble(List<String> fields, ImportFile importFile, Long importacaoId) {
 		PaisDTO pais = new PaisDTO();
 		if(importFile.equals(ImportFile.ECT_PAIS)) {
 			pais.setNome(fields.get(2));

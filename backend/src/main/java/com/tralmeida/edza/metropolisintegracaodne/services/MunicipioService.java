@@ -28,7 +28,7 @@ public class MunicipioService implements AddressObjectAssembler<MunicipioDTO>{
 	private UnidadeFederativaRepository ufRepository;
 
 	@Override
-	public Optional<MunicipioDTO> toAssemble(List<String> fields, ImportFile importFile) {
+	public Optional<MunicipioDTO> toAssemble(List<String> fields, ImportFile importFile, Long importacaoId) {
 		MunicipioDTO dto = new MunicipioDTO();
 		if(importFile.equals(ImportFile.LOG_LOCALIDADE)) {
 			dto.setMunicipioId(ParseUtil.parseStringToLong(fields.get(0)));

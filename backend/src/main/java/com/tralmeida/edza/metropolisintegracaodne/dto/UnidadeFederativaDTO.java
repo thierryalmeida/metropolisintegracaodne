@@ -17,6 +17,8 @@ public class UnidadeFederativaDTO implements Serializable{
 	private Long cepFim;
 	private PaisDTO pais;
 	
+	private Long importacaoId;
+	
 	public UnidadeFederativaDTO() {
 	}
 	
@@ -100,5 +102,13 @@ public class UnidadeFederativaDTO implements Serializable{
 
 	public void setPaisDTO(PaisDTO pais) {
 		this.pais = pais;
+	}
+
+	public Long getImportacaoId() {
+		return importacaoId;
+	}
+
+	public void setImportacaoId(Long importacaoId) {
+		this.importacaoId = importacaoId;
 	}
 }

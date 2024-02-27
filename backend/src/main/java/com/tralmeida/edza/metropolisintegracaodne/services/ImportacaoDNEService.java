@@ -7,12 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.tralmeida.edza.metropolisintegracaodne.dto.ImportacaoDNEDTO;
+import com.tralmeida.edza.metropolisintegracaodne.dto.StatusImportacaoDTO;
+import com.tralmeida.edza.metropolisintegracaodne.dto.TabelaImportacaoDTO;
 import com.tralmeida.edza.metropolisintegracaodne.entities.ImportacaoDNE;
+import com.tralmeida.edza.metropolisintegracaodne.entities.StatusImportacao;
 import com.tralmeida.edza.metropolisintegracaodne.entityassemblers.AddressObjectAssembler;
+import com.tralmeida.edza.metropolisintegracaodne.enums.StatusImportacaoEnum;
 import com.tralmeida.edza.metropolisintegracaodne.enums.TableEnum;
 import com.tralmeida.edza.metropolisintegracaodne.filereaders.DNEDelimitadoFileReader;
 import com.tralmeida.edza.metropolisintegracaodne.repositories.ImportacaoDNERepository;
@@ -54,29 +59,59 @@ public class ImportacaoDNEService {
 	}
 	
 	@Transactional
-	public ImportacaoDNEDTO insert(ImportacaoDNEDTO dto, MultipartFile multipartFile){
-		AddressObjectAssembler<?> entityAssembler = getAddressEntityAssemblerByIdTabela(dto.getTabelaImportacaoDTO().getTabelaImportacaoId());
-		DNEDelimitadoFileReader fileReader = new DNEDelimitadoFileReader(multipartFile, entityAssembler);
-		
+	public ImportacaoDNEDTO importData(ImportacaoDNEDTO dto, MultipartFile multipartFile){
+		ImportacaoDNE entity = insert(dto);
+		/*
 		ImportacaoDNE entity = copyDTOToEntity(dto);
 		entity.setDataImportacao(new Timestamp(System.currentTimeMillis()));
-		Long registrosImportados = 0L;
+		entity.setRegistrosLidos(null);
+		entity.setRegistrosImportados(null);
+		entity = repository.saveAndFlush(entity); 
+		*/
+		
+		AddressObjectAssembler<?> entityAssembler = getAddressEntityAssemblerByIdTabela(dto.getTabelaImportacaoDTO().getTabelaImportacaoId());
+		DNEDelimitadoFileReader fileReader = new DNEDelimitadoFileReader(multipartFile, entityAssembler, entity.getImportacaoId());
+		
 		try {
-			registrosImportados = fileReader.insertEntities();
+			fileReader.insertEntities();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		entity.setRegistrosLidos(fileReader.getLinesRead());
-		entity.setRegistrosImportados(registrosImportados);
-		entity = repository.save(entity);
+		entity.setRegistrosImportados(fileReader.getImportedLines());
+		
+		boolean totalEqualsImported = fileReader.getTotalLines().equals(fileReader.getImportedLines());
+		boolean someLineRead = !(fileReader.getLinesRead().compareTo(0L) > 0);;
+		boolean someImportedLine = !(fileReader.getImportedLines().compareTo(0L) > 0);  
+		
+		StatusImportacaoEnum status = StatusImportacaoEnum.ERRO;
+		if(totalEqualsImported) {
+			status = StatusImportacaoEnum.SUCESSO;
+		} else if(someLineRead && someImportedLine) {
+			status = StatusImportacaoEnum.INCOMPLETA;
+		}
+		entity.setStatusImportacao(new StatusImportacao(status.getStatusImportacaoId(), null));
+		entity = repository.saveAndFlush(entity);
 		
 		return new ImportacaoDNEDTO(entity);
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	private ImportacaoDNE insert(ImportacaoDNEDTO dto) {
+		ImportacaoDNE entity = copyDTOToEntity(dto);
+		entity.setDataImportacao(new Timestamp(System.currentTimeMillis()));
+		entity = repository.saveAndFlush(entity);
+		
+		return entity;
 	}
 	
 	private ImportacaoDNE copyDTOToEntity(ImportacaoDNEDTO dto) {
 		ImportacaoDNE entity = new ImportacaoDNE();
 		entity.setDescricao(dto.getDescricao());
+		entity.setDataImportacao(dto.getDataImportacao());
+		entity.setRegistrosLidos(dto.getRegistrosLidos());
+		entity.setRegistrosImportados(dto.getRegistrosImportados());
 		entity.setStatusImportacao(statusImportacaoRepository.getReferenceById(dto.getStatusImportacaoDTO().getStatusImportacaoId()));
 		entity.setTabelaImportacao(tabelaImportacaoRepository.getReferenceById(dto.getTabelaImportacaoDTO().getTabelaImportacaoId()));
 		

@@ -22,28 +22,33 @@ public class DNEDelimitadoFileReader {
 	@Autowired
 	private AddressObjectAssembler entityAssembler;
 	
+	private Long importacaoId;
+	private Long totalLines;
 	private Long linesRead;
+	private Long importedLines;
 	
-	public DNEDelimitadoFileReader(MultipartFile file, AddressObjectAssembler entityAssembler) {
+	public DNEDelimitadoFileReader(MultipartFile file, AddressObjectAssembler entityAssembler, Long importacaoId) {
 		this.file = file;
 		this.entityAssembler = entityAssembler;
+		this.importacaoId = importacaoId;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Long insertEntities() throws IOException{
+	public void insertEntities() throws IOException{
 		Scanner scanner = new Scanner(file.getInputStream(),"windows-1252");
-		Long importedLines = 0L;
+		this.importedLines = 0L;
 		this.linesRead = 0L;
+		this.totalLines = 0L;
 		
 		ImportFile importFile = detectImportFile();
 		while(scanner.hasNextLine()) {
+			totalLines++;
 			String line = scanner.nextLine();
-			ArrayList<String> lineData = readLine(line);
-			
 			Optional<?> entityOptional = Optional.empty();
 			
 			try {
-				entityOptional = entityAssembler.toAssemble(lineData, importFile);
+				ArrayList<String> lineData = readLine(line);
+				entityOptional = entityAssembler.toAssemble(lineData, importFile, importacaoId);
 				linesRead++;
 			} catch (Exception e) {
 				System.out.println("Erro ao ler linha: "+line);
@@ -60,7 +65,6 @@ public class DNEDelimitadoFileReader {
 			}
 		}
 		scanner.close();
-		return importedLines;
 	}
 	
 	private ArrayList<String> readLine(String line){
@@ -78,7 +82,15 @@ public class DNEDelimitadoFileReader {
 		}
 	}
 
+	public Long getTotalLines() {
+		return totalLines;
+	}
+
 	public Long getLinesRead() {
 		return linesRead;
+	}
+	
+	public Long getImportedLines() {
+		return importedLines;
 	}
 }

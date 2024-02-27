@@ -19,6 +19,8 @@ public class BairroDTO implements Serializable{
 	private Long cepInicial;
 	private Long cepFinal;
 	
+	private Long importacaoId;
+	
 	private MunicipioDTO municipio;
 	
 	public BairroDTO() {
@@ -131,5 +133,13 @@ public class BairroDTO implements Serializable{
 
 	public void setMunicipioDTO(MunicipioDTO municipio) {
 		this.municipio = municipio;
+	}
+
+	public Long getImportacaoId() {
+		return importacaoId;
+	}
+
+	public void setImportacaoId(Long importacaoId) {
+		this.importacaoId = importacaoId;
 	}
 }

@@ -15,10 +15,11 @@ public class MunicipioDTO implements Serializable{
 	private Long codigo;
 	private Long cep;
 	private Integer oficial;
-	
 	private Long cepInicial;
 	private Long cepFinal;
 	private Long codigoTom;
+	
+	private Long importacaoId;
 	
 	private UnidadeFederativaDTO uf;
 	
@@ -121,5 +122,13 @@ public class MunicipioDTO implements Serializable{
 
 	public void setUf(UnidadeFederativaDTO uf) {
 		this.uf = uf;
+	}
+
+	public Long getImportacaoId() {
+		return importacaoId;
+	}
+
+	public void setImportacaoId(Long importacaoId) {
+		this.importacaoId = importacaoId;
 	}
 }

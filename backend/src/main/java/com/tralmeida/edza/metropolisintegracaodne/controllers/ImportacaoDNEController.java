@@ -42,7 +42,7 @@ public class ImportacaoDNEController {
 			@RequestParam("idTabela") Long idTabela,
 			@RequestParam("descricao") String descricao){
 		ImportacaoDNEDTO dto = getDTO(idTabela, descricao);
-		dto = service.insert(dto, file);
+		dto = service.importData(dto, file);
 		return ResponseEntity.created(null).body(dto);
 	}
 	
