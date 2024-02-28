@@ -1,5 +1,6 @@
 package com.tralmeida.edza.metropolisintegracaodne.services;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,6 +13,7 @@ import com.tralmeida.edza.metropolisintegracaodne.constants.ConstantesEndereco;
 import com.tralmeida.edza.metropolisintegracaodne.dto.BairroDTO;
 import com.tralmeida.edza.metropolisintegracaodne.dto.MunicipioDTO;
 import com.tralmeida.edza.metropolisintegracaodne.entities.Bairro;
+import com.tralmeida.edza.metropolisintegracaodne.entities.ImportacaoDNE;
 import com.tralmeida.edza.metropolisintegracaodne.entities.Municipio;
 import com.tralmeida.edza.metropolisintegracaodne.entityassemblers.AddressObjectAssembler;
 import com.tralmeida.edza.metropolisintegracaodne.enums.ImportFile;
@@ -31,6 +33,8 @@ public class BairroService implements AddressObjectAssembler<BairroDTO>{
 	@Override
 	public Optional<BairroDTO> toAssemble(List<String> fields, ImportFile importFile, Long importacaoId) {
 		BairroDTO dto = new BairroDTO();
+		dto.setDtAtualizacao(new Timestamp(System.currentTimeMillis()));
+		dto.setImportacaoId(importacaoId);
 		if(importFile.equals(ImportFile.LOG_BAIRRO)) {
 			dto.setBairroId(ParseUtil.parseStringToLong(fields.get(0)));
 			dto.setMunicipioDTO(new MunicipioDTO());
@@ -95,6 +99,13 @@ public class BairroService implements AddressObjectAssembler<BairroDTO>{
 		if(newBairro.getTpImovel() != null) {
 			oldBairro.setTpImovel(newBairro.getTpImovel());
 		}
+		if(newBairro.getDtInclusao() != null) {
+			oldBairro.setDtInclusao(newBairro.getDtInclusao());
+		}
+		oldBairro.setDtAtualizacao(newBairro.getDtAtualizacao());
+		oldBairro.setImportacaoDNE(new ImportacaoDNE());
+		oldBairro.getImportacaoDNE().setImportacaoId(newBairro.getImportacaoId());
+		
 		if(newBairro.getMunicipioDTO() != null && newBairro.getMunicipioDTO().getMunicipioId() != null) {
 			Optional<Municipio> municipio = municipioRepository.findById(newBairro.getMunicipioDTO().getMunicipioId());
 			oldBairro.setMunicipio(municipio.get());
@@ -114,6 +125,10 @@ public class BairroService implements AddressObjectAssembler<BairroDTO>{
 		entity.setGrupoBairro(entityDTO.getGrupoBairro());
 		entity.setTipo(entityDTO.getTipo());
 		entity.setTpImovel(entityDTO.getTpImovel());
+		entity.setDtAtualizacao(entityDTO.getDtAtualizacao());
+		entity.setDtInclusao(entityDTO.getDtAtualizacao());
+		entity.setImportacaoDNE(new ImportacaoDNE());
+		entity.getImportacaoDNE().setImportacaoId(entityDTO.getImportacaoId());
 		
 		if(entityDTO.getMunicipioDTO() != null && entityDTO.getMunicipioDTO().getMunicipioId() != null) {
 			Optional<Municipio> municipio = municipioRepository.findById(entityDTO.getMunicipioDTO().getMunicipioId());
@@ -121,5 +136,4 @@ public class BairroService implements AddressObjectAssembler<BairroDTO>{
 		}
 		return entity;
 	}
-
 }

@@ -1,6 +1,7 @@
 package com.tralmeida.edza.metropolisintegracaodne.dto;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 import com.tralmeida.edza.metropolisintegracaodne.entities.Pais;
 import com.tralmeida.edza.metropolisintegracaodne.entities.UnidadeFederativa;
@@ -16,6 +17,8 @@ public class UnidadeFederativaDTO implements Serializable{
 	private Long cepIni;
 	private Long cepFim;
 	private PaisDTO pais;
+	private Timestamp dtInclusao;
+	private Timestamp dtAtualizacao;
 	
 	private Long importacaoId;
 	
@@ -110,5 +113,21 @@ public class UnidadeFederativaDTO implements Serializable{
 
 	public void setImportacaoId(Long importacaoId) {
 		this.importacaoId = importacaoId;
+	}
+
+	public Timestamp getDtInclusao() {
+		return dtInclusao;
+	}
+
+	public void setDtInclusao(Timestamp dtInclusao) {
+		this.dtInclusao = dtInclusao;
+	}
+
+	public Timestamp getDtAtualizacao() {
+		return dtAtualizacao;
+	}
+
+	public void setDtAtualizacao(Timestamp dtAtualizacao) {
+		this.dtAtualizacao = dtAtualizacao;
 	}
 }

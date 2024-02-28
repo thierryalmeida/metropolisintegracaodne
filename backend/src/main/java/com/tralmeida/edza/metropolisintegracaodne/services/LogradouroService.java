@@ -183,8 +183,6 @@ public class LogradouroService implements AddressObjectAssembler<LogradouroDTO>{
 		entity.setCodigo(entityDTO.getCodigo());
 		entity.setComplemento(entityDTO.getComplemento());
 		entity.setDataDocumentoLegal(entityDTO.getDataDocumentoLegal());
-		entity.setDtAtualizacao(entityDTO.getDtAtualizacao());
-		entity.setDtInclusao(entityDTO.getDtAtualizacao());
 		entity.setLimiteMetrico(entityDTO.getLimiteMetrico());
 		entity.setLogradouroFinalId(entityDTO.getLogradouroFinalId());
 		entity.setLogradouroGeoId(entityDTO.getLogradouroGeoId());
@@ -197,6 +195,8 @@ public class LogradouroService implements AddressObjectAssembler<LogradouroDTO>{
 		entity.setUsuarioId(entityDTO.getUsuarioId());
 		entity.setImportacaoDNE(new ImportacaoDNE());
 		entity.getImportacaoDNE().setImportacaoId(entityDTO.getImportacaoId());
+		entity.setDtAtualizacao(entityDTO.getDtAtualizacao());
+		entity.setDtInclusao(entityDTO.getDtAtualizacao());
 		
 		if(entityDTO.getMunicipioDTO() != null && entityDTO.getMunicipioDTO().getMunicipioId() != null) {
 			Optional<Municipio> municipio = municipioRepository.findById(entityDTO.getMunicipioDTO().getMunicipioId());

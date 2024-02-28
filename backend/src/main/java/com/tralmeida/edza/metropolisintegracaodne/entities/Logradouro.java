@@ -47,7 +47,6 @@ public class Logradouro implements Serializable{
 	@JoinColumn(name = "importacaodneid")
 	private ImportacaoDNE importacaoDNE;
 	
-	
 	@ManyToOne
 	@JoinColumn(name = "municipioid")
 	private Municipio municipio;

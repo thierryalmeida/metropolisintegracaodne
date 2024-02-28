@@ -1,5 +1,6 @@
 package com.tralmeida.edza.metropolisintegracaodne.services;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tralmeida.edza.metropolisintegracaodne.dto.MunicipioDTO;
 import com.tralmeida.edza.metropolisintegracaodne.dto.UnidadeFederativaDTO;
+import com.tralmeida.edza.metropolisintegracaodne.entities.ImportacaoDNE;
 import com.tralmeida.edza.metropolisintegracaodne.entities.Municipio;
 import com.tralmeida.edza.metropolisintegracaodne.entities.UnidadeFederativa;
 import com.tralmeida.edza.metropolisintegracaodne.entityassemblers.AddressObjectAssembler;
@@ -30,6 +32,9 @@ public class MunicipioService implements AddressObjectAssembler<MunicipioDTO>{
 	@Override
 	public Optional<MunicipioDTO> toAssemble(List<String> fields, ImportFile importFile, Long importacaoId) {
 		MunicipioDTO dto = new MunicipioDTO();
+	    dto.setDtAtualizacao(new Timestamp(System.currentTimeMillis()));
+		dto.setImportacaoId(importacaoId);
+		
 		if(importFile.equals(ImportFile.LOG_LOCALIDADE)) {
 			dto.setMunicipioId(ParseUtil.parseStringToLong(fields.get(0)));
 			dto.setUf(new UnidadeFederativaDTO());
@@ -91,6 +96,13 @@ public class MunicipioService implements AddressObjectAssembler<MunicipioDTO>{
 		if(newMunicipio.getOficial() != null) {
 			oldMunicipio.setOficial(newMunicipio.getOficial());
 		}
+	    if(newMunicipio.getDtInclusao() != null) {
+			oldMunicipio.setDtInclusao(newMunicipio.getDtInclusao());
+		}
+		oldMunicipio.setDtAtualizacao(newMunicipio.getDtAtualizacao());
+		oldMunicipio.setImportacaoDNE(new ImportacaoDNE());
+		oldMunicipio.getImportacaoDNE().setImportacaoId(newMunicipio.getImportacaoId());
+		
 		if(newMunicipio.getUf() != null && newMunicipio.getUf().getSigla() != null) {
 			UnidadeFederativa uf = ufRepository.findBySigla(newMunicipio.getUf().getSigla());
 			oldMunicipio.setUf(uf);
@@ -109,6 +121,10 @@ public class MunicipioService implements AddressObjectAssembler<MunicipioDTO>{
 		entity.setMunicipioId(entityDTO.getMunicipioId());
 		entity.setNome(entityDTO.getNome());
 		entity.setOficial(entityDTO.getOficial());
+	 	entity.setDtAtualizacao(entityDTO.getDtAtualizacao());
+		entity.setDtInclusao(entityDTO.getDtAtualizacao());
+		entity.setImportacaoDNE(new ImportacaoDNE());
+		entity.getImportacaoDNE().setImportacaoId(entityDTO.getImportacaoId());
 		
 		if(entityDTO.getUf() != null && entityDTO.getUf().getSigla() != null) {
 			UnidadeFederativa uf = ufRepository.findBySigla(entityDTO.getUf().getSigla());

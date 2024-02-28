@@ -1,5 +1,6 @@
 package com.tralmeida.edza.metropolisintegracaodne.services;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tralmeida.edza.metropolisintegracaodne.dto.PaisDTO;
 import com.tralmeida.edza.metropolisintegracaodne.dto.UnidadeFederativaDTO;
+import com.tralmeida.edza.metropolisintegracaodne.entities.ImportacaoDNE;
 import com.tralmeida.edza.metropolisintegracaodne.entities.Pais;
 import com.tralmeida.edza.metropolisintegracaodne.entities.UnidadeFederativa;
 import com.tralmeida.edza.metropolisintegracaodne.entityassemblers.AddressObjectAssembler;
@@ -37,6 +39,8 @@ public class UnidadeFederativaService implements AddressObjectAssembler<UnidadeF
 			ufDTO.setCepFim(ParseUtil.parseStringToLong(fields.get(2)));
 			ufDTO.setOficial(1);
 			ufDTO.setPaisDTO(new PaisDTO());
+		    ufDTO.setDtAtualizacao(new Timestamp(System.currentTimeMillis()));
+			ufDTO.setImportacaoId(importacaoId);
 			
 			return Optional.of(ufDTO);
 		}else {
@@ -78,6 +82,13 @@ public class UnidadeFederativaService implements AddressObjectAssembler<UnidadeF
 		if(newUf.getUfId() != null) {
 			oldUf.setUfId(newUf.getUfId());
 		}
+	    if(newUf.getDtInclusao() != null) {
+			oldUf.setDtInclusao(newUf.getDtInclusao());
+		}
+		oldUf.setDtAtualizacao(newUf.getDtAtualizacao());
+		oldUf.setImportacaoDNE(new ImportacaoDNE());
+		oldUf.getImportacaoDNE().setImportacaoId(newUf.getImportacaoId());
+		
 		if(newUf.getPaisDTO() != null && newUf.getPaisDTO().getPaisId() != null) {
 			Pais pais = paisRepository.findBySigla(newUf.getPaisDTO().getSigla());
 			oldUf.setPais(pais);
@@ -92,6 +103,10 @@ public class UnidadeFederativaService implements AddressObjectAssembler<UnidadeF
 		entity.setSigla(dto.getSigla());
 		entity.setNome(dto.getNome());
 		entity.setOficial(dto.getOficial());
+	 	entity.setDtAtualizacao(dto.getDtAtualizacao());
+		entity.setDtInclusao(dto.getDtAtualizacao());
+		entity.setImportacaoDNE(new ImportacaoDNE());
+		entity.getImportacaoDNE().setImportacaoId(dto.getImportacaoId());
 		return entity;
 	}
 

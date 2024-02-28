@@ -1,5 +1,6 @@
 package com.tralmeida.edza.metropolisintegracaodne.services;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tralmeida.edza.metropolisintegracaodne.dto.PaisDTO;
+import com.tralmeida.edza.metropolisintegracaodne.entities.ImportacaoDNE;
 import com.tralmeida.edza.metropolisintegracaodne.entities.Pais;
 import com.tralmeida.edza.metropolisintegracaodne.entityassemblers.AddressObjectAssembler;
 import com.tralmeida.edza.metropolisintegracaodne.enums.ImportFile;
@@ -27,6 +29,9 @@ public class PaisService implements AddressObjectAssembler<PaisDTO>{
 			pais.setNome(fields.get(2));
 			pais.setSigla(fields.get(0));
 			pais.setNacionalidade(fields.get(2));
+		    pais.setDtAtualizacao(new Timestamp(System.currentTimeMillis()));
+			pais.setImportacaoId(importacaoId);
+			
 			return Optional.of(pais);
 		} else {
 			return Optional.empty();
@@ -65,6 +70,13 @@ public class PaisService implements AddressObjectAssembler<PaisDTO>{
 		if(newPais.getSigla() != null) {
 			oldPais.setSigla(newPais.getSigla());
 		}
+	    if(newPais.getDtInclusao() != null) {
+			oldPais.setDtInclusao(newPais.getDtInclusao());
+		}
+		oldPais.setDtAtualizacao(newPais.getDtAtualizacao());
+		oldPais.setImportacaoDNE(new ImportacaoDNE());
+		oldPais.getImportacaoDNE().setImportacaoId(newPais.getImportacaoId());
+		
 		return oldPais;
 	}
 	
@@ -75,6 +87,10 @@ public class PaisService implements AddressObjectAssembler<PaisDTO>{
 		entity.setSigla(dto.getSigla());
 		entity.setNome(dto.getNome());
 		entity.setNacionalidade(dto.getNacionalidade());
+	 	entity.setDtAtualizacao(dto.getDtAtualizacao());
+		entity.setDtInclusao(dto.getDtAtualizacao());
+		entity.setImportacaoDNE(new ImportacaoDNE());
+		entity.getImportacaoDNE().setImportacaoId(dto.getImportacaoId());
 		
 		return entity;
 	}

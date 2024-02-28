@@ -58,16 +58,8 @@ public class ImportacaoDNEService {
 		return page.map(x -> new ImportacaoDNEDTO(x));
 	}
 	
-	@Transactional
 	public ImportacaoDNEDTO importData(ImportacaoDNEDTO dto, MultipartFile multipartFile){
 		ImportacaoDNE entity = insert(dto);
-		/*
-		ImportacaoDNE entity = copyDTOToEntity(dto);
-		entity.setDataImportacao(new Timestamp(System.currentTimeMillis()));
-		entity.setRegistrosLidos(null);
-		entity.setRegistrosImportados(null);
-		entity = repository.saveAndFlush(entity); 
-		*/
 		
 		AddressObjectAssembler<?> entityAssembler = getAddressEntityAssemblerByIdTabela(dto.getTabelaImportacaoDTO().getTabelaImportacaoId());
 		DNEDelimitadoFileReader fileReader = new DNEDelimitadoFileReader(multipartFile, entityAssembler, entity.getImportacaoId());

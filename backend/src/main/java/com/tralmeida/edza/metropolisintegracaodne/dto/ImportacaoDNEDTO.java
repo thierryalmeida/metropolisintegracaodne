@@ -21,12 +21,13 @@ public class ImportacaoDNEDTO implements Serializable{
 	}
 	
 	public ImportacaoDNEDTO(Long id, String descricao, Timestamp dataImportacao, Long registrosImportados,
-			Long registrosLidos, TabelaImportacaoDTO tabelaImportacaoDTO) {
+			Long registrosLidos, TabelaImportacaoDTO tabelaImportacaoDTO, StatusImportacaoDTO statusImportacaoDTO) {
 		super();
 		this.importacaoId = id;
 		this.descricao = descricao;
 		this.dataImportacao = dataImportacao;
 		this.tabelaImportacaoDTO = tabelaImportacaoDTO;
+		this.statusImportacaoDTO = statusImportacaoDTO;
 		this.registrosImportados = registrosImportados;
 		this.registrosLidos = registrosLidos;
 	}
@@ -36,6 +37,7 @@ public class ImportacaoDNEDTO implements Serializable{
 		this.descricao = entity.getDescricao();
 		this.dataImportacao = entity.getDataImportacao();
 		this.tabelaImportacaoDTO = new TabelaImportacaoDTO(entity.getTabelaImportacao());
+		this.statusImportacaoDTO = new StatusImportacaoDTO(entity.getStatusImportacao());
 		this.registrosImportados = entity.getRegistrosImportados();
 		this.registrosLidos = entity.getRegistrosLidos();
 	}
