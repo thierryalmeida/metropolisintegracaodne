@@ -43,9 +43,6 @@ public class BairroLogradouroService {
 		BairroLogradouro entity = new BairroLogradouro();
 		entity.setBairro(bairroRepository.getReferenceById(dto.getBairro().getBairroId()));
 		entity.setLogradouro(logradouroRepository.getReferenceById(dto.getLogradouro().getLogradouroId()));
-		entity.setImportacaoDNE(importacaoDNERepository.getReferenceById(dto.getImportacaoId()));
-		//entity.setImportacaoDNE(new ImportacaoDNE());
-		//entity.getImportacaoDNE().setImportacaoId(dto.getImportacaoId());
 		
 		return entity;
 	}

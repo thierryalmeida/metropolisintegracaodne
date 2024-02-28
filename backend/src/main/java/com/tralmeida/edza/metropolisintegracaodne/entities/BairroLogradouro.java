@@ -34,10 +34,6 @@ public class BairroLogradouro implements Serializable{
 	@JoinColumn(name = "logradouroId")
 	private Logradouro logradouro;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "importacaodneid")
-	private ImportacaoDNE importacaoDNE;
-	
 	public BairroLogradouro() {
 	}
 
@@ -70,14 +66,6 @@ public class BairroLogradouro implements Serializable{
 
 	public void setLogradouro(Logradouro logradouro) {
 		this.logradouro = logradouro;
-	}
-
-	public ImportacaoDNE getImportacaoDNE() {
-		return importacaoDNE;
-	}
-
-	public void setImportacaoDNE(ImportacaoDNE importacaoDNE) {
-		this.importacaoDNE = importacaoDNE;
 	}
 
 	@Override

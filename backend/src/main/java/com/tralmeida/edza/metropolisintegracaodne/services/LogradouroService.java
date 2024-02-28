@@ -94,7 +94,6 @@ public class LogradouroService implements AddressObjectAssembler<LogradouroDTO>{
 			bairroLogradouroDTO.getBairro().setBairroId(bairroId);
 			bairroLogradouroDTO.setLogradouro(new LogradouroDTO());
 			bairroLogradouroDTO.getLogradouro().setLogradouroId(logradouroId);
-			bairroLogradouroDTO.setImportacaoId(importacaoId);
 			
 			bairroLogradouroService.saveAndFlush(bairroLogradouroDTO);
 		}
