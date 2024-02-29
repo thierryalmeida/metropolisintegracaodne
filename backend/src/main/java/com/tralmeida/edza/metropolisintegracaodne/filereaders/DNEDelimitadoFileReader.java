@@ -65,9 +65,11 @@ public class DNEDelimitadoFileReader {
 			}
 		}
 		scanner.close();
+		System.out.println("Leitura do arquivo finalizada");
 	}
 	
 	private ArrayList<String> readLine(String line){
+		System.out.println("Lendo linha: "+line);
 		String[] substrings = line.split("@");
 		return new ArrayList<String>(List.of(substrings));
 	}
