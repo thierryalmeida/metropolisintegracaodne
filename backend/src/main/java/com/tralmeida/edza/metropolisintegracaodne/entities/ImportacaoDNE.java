@@ -37,12 +37,14 @@ public class ImportacaoDNE implements Serializable{
 	public ImportacaoDNE() {
 	}
 
-	public ImportacaoDNE(Long id, String descricao, Timestamp dataImportacao, TabelaImportacao tabelaImportacao) {
+	public ImportacaoDNE(Long id, String descricao, Timestamp dataImportacao, 
+			TabelaImportacao tabelaImportacao, StatusImportacao statusImportacao) {
 		super();
 		this.importacaoId = id;
 		this.descricao = descricao;
 		this.dataImportacao = dataImportacao;
 		this.tabelaImportacao = tabelaImportacao;
+		this.statusImportacao = statusImportacao;
 	}
 
 	public Long getImportacaoId() {
