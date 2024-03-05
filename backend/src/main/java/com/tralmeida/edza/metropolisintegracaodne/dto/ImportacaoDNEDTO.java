@@ -16,6 +16,7 @@ public class ImportacaoDNEDTO implements Serializable{
 	private StatusImportacaoDTO statusImportacaoDTO;
 	private Long registrosLidos;
 	private Long registrosImportados;
+	private Long registrosLidosComErro;
 	
 	public ImportacaoDNEDTO() {
 	}
@@ -88,6 +89,14 @@ public class ImportacaoDNEDTO implements Serializable{
 
 	public void setRegistrosImportados(Long registrosImportados) {
 		this.registrosImportados = registrosImportados;
+	}
+	
+	public Long getRegistrosLidosComErro() {
+		return registrosLidosComErro;
+	}
+
+	public void setRegistrosLidosComErro(Long registrosLidosComErro) {
+		this.registrosLidosComErro = registrosLidosComErro;
 	}
 
 	public StatusImportacaoDTO getStatusImportacaoDTO() {

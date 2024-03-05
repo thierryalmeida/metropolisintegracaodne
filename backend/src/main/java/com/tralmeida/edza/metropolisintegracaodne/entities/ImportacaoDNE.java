@@ -25,6 +25,8 @@ public class ImportacaoDNE implements Serializable{
 	private Timestamp dataImportacao;
 	private Long registrosLidos;
 	private Long registrosImportados;
+	private Long registrosLidosComErro;
+	private String logErro;
 	
 	@ManyToOne
 	@JoinColumn(name = "statusimportacaoid")
@@ -103,6 +105,22 @@ public class ImportacaoDNE implements Serializable{
 		this.statusImportacao = statusImportacao;
 	}
 
+	public Long getRegistrosLidosComErro() {
+		return registrosLidosComErro;
+	}
+
+	public void setRegistrosLidosComErro(Long registrosLidosComErro) {
+		this.registrosLidosComErro = registrosLidosComErro;
+	}
+	
+	public String getLogErro() {
+		return logErro;
+	}
+
+	public void setLogErro(String logErro) {
+		this.logErro = logErro;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(importacaoId);
@@ -119,5 +137,4 @@ public class ImportacaoDNE implements Serializable{
 		ImportacaoDNE other = (ImportacaoDNE) obj;
 		return Objects.equals(importacaoId, other.importacaoId);
 	}
-	
 }

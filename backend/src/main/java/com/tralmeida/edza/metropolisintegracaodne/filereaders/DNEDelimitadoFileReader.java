@@ -26,6 +26,9 @@ public class DNEDelimitadoFileReader {
 	private Long totalLines;
 	private Long linesRead;
 	private Long importedLines;
+	private Long errorLines;
+	
+	private String errors;
 	
 	public DNEDelimitadoFileReader(MultipartFile file, AddressObjectAssembler entityAssembler, Long importacaoId) {
 		this.file = file;
@@ -39,6 +42,9 @@ public class DNEDelimitadoFileReader {
 		this.importedLines = 0L;
 		this.linesRead = 0L;
 		this.totalLines = 0L;
+		this.errorLines = 0L;
+		
+		StringBuffer errorsBuffer = new StringBuffer();
 		
 		ImportFile importFile = detectImportFile();
 		while(scanner.hasNextLine()) {
@@ -51,7 +57,10 @@ public class DNEDelimitadoFileReader {
 				entityOptional = entityAssembler.toAssemble(lineData, importFile, importacaoId);
 				linesRead++;
 			} catch (Exception e) {
-				System.out.println("Erro ao ler linha: "+line);
+				errorLines++;
+				String readingError = "Erro ao ler linha "+totalLines+": "+line;
+				System.out.println(readingError);
+				errorsBuffer.append(readingError).append("\n");
 			}
 			
 			if(entityOptional.isPresent()) {
@@ -60,11 +69,15 @@ public class DNEDelimitadoFileReader {
 						importedLines++;
 					}
 				} catch(Exception e){
-					System.out.println("Erro ao importar linha: "+line);
+					errorLines++;
+					String importError = "Erro ao importar linha "+totalLines+": "+line;
+					System.out.println(importError);
+					errorsBuffer.append(importError).append("\n");
 				}
 			}
 		}
 		scanner.close();
+		this.errors = errorsBuffer.toString();
 		System.out.println("Leitura do arquivo finalizada");
 	}
 	
@@ -94,5 +107,13 @@ public class DNEDelimitadoFileReader {
 	
 	public Long getImportedLines() {
 		return importedLines;
+	}
+	
+	public Long getErrorLines() {
+		return errorLines;
+	}
+	
+	public String getErrors() {
+		return errors;
 	}
 }

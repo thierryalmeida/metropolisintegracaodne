@@ -72,10 +72,12 @@ public class ImportacaoDNEService {
 		
 		entity.setRegistrosLidos(fileReader.getLinesRead());
 		entity.setRegistrosImportados(fileReader.getImportedLines());
+		entity.setRegistrosLidosComErro(fileReader.getErrorLines());
+		entity.setLogErro(fileReader.getErrors());
 		
 		boolean totalEqualsImported = fileReader.getTotalLines().equals(fileReader.getImportedLines());
-		boolean someLineRead = !(fileReader.getLinesRead().compareTo(0L) > 0);;
-		boolean someImportedLine = !(fileReader.getImportedLines().compareTo(0L) > 0);  
+		boolean someLineRead = fileReader.getLinesRead().compareTo(0L) > 0;
+		boolean someImportedLine = fileReader.getImportedLines().compareTo(0L) > 0;  
 		
 		StatusImportacaoEnum status = StatusImportacaoEnum.ERRO;
 		if(totalEqualsImported) {
