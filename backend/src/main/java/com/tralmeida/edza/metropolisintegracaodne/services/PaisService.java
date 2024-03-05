@@ -15,6 +15,7 @@ import com.tralmeida.edza.metropolisintegracaodne.entities.Pais;
 import com.tralmeida.edza.metropolisintegracaodne.entityassemblers.AddressObjectAssembler;
 import com.tralmeida.edza.metropolisintegracaodne.enums.ImportFile;
 import com.tralmeida.edza.metropolisintegracaodne.repositories.PaisRepository;
+import com.tralmeida.edza.metropolisintegracaodne.util.TimeUtil;
 
 @Service
 public class PaisService implements AddressObjectAssembler<PaisDTO>{
@@ -29,7 +30,7 @@ public class PaisService implements AddressObjectAssembler<PaisDTO>{
 			pais.setNome(fields.get(2));
 			pais.setSigla(fields.get(0));
 			pais.setNacionalidade(fields.get(2));
-		    pais.setDtAtualizacao(new Timestamp(System.currentTimeMillis()));
+		    pais.setDtAtualizacao(new Timestamp(TimeUtil.getCurrentTimeInMillis()));
 			pais.setImportacaoId(importacaoId);
 			
 			return Optional.of(pais);

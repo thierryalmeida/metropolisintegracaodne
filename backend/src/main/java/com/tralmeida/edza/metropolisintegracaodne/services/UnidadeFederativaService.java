@@ -19,6 +19,7 @@ import com.tralmeida.edza.metropolisintegracaodne.enums.ImportFile;
 import com.tralmeida.edza.metropolisintegracaodne.repositories.PaisRepository;
 import com.tralmeida.edza.metropolisintegracaodne.repositories.UnidadeFederativaRepository;
 import com.tralmeida.edza.metropolisintegracaodne.util.ParseUtil;
+import com.tralmeida.edza.metropolisintegracaodne.util.TimeUtil;
 
 @Service
 public class UnidadeFederativaService implements AddressObjectAssembler<UnidadeFederativaDTO>{
@@ -39,7 +40,7 @@ public class UnidadeFederativaService implements AddressObjectAssembler<UnidadeF
 			ufDTO.setCepFim(ParseUtil.parseStringToLong(fields.get(2)));
 			ufDTO.setOficial(1);
 			ufDTO.setPaisDTO(new PaisDTO());
-		    ufDTO.setDtAtualizacao(new Timestamp(System.currentTimeMillis()));
+		    ufDTO.setDtAtualizacao(new Timestamp(TimeUtil.getCurrentTimeInMillis()));
 			ufDTO.setImportacaoId(importacaoId);
 			
 			return Optional.of(ufDTO);

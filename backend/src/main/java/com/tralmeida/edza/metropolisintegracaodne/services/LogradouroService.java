@@ -23,6 +23,7 @@ import com.tralmeida.edza.metropolisintegracaodne.enums.ImportFile;
 import com.tralmeida.edza.metropolisintegracaodne.repositories.LogradouroRepository;
 import com.tralmeida.edza.metropolisintegracaodne.repositories.MunicipioRepository;
 import com.tralmeida.edza.metropolisintegracaodne.util.ParseUtil;
+import com.tralmeida.edza.metropolisintegracaodne.util.TimeUtil;
 
 @Service
 public class LogradouroService implements AddressObjectAssembler<LogradouroDTO>{
@@ -52,7 +53,7 @@ public class LogradouroService implements AddressObjectAssembler<LogradouroDTO>{
 			dto.setCep(ParseUtil.parseStringToLong(fields.get(7)));
 			dto.setOficial(ConstantesEndereco.OFICIAL);
 			dto.setCodigo(ParseUtil.parseStringToLong(fields.get(0)));
-			dto.setDtAtualizacao(new Timestamp(System.currentTimeMillis()));
+			dto.setDtAtualizacao(new Timestamp(TimeUtil.getCurrentTimeInMillis()));
 			dto.setImportacaoId(importacaoId);
 			
 			TipoLogradouro tipo = tipoLogradouroService.specialFindByDescricao(fields.get(8));

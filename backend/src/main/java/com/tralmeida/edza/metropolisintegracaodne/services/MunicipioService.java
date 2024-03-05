@@ -19,6 +19,7 @@ import com.tralmeida.edza.metropolisintegracaodne.enums.ImportFile;
 import com.tralmeida.edza.metropolisintegracaodne.repositories.MunicipioRepository;
 import com.tralmeida.edza.metropolisintegracaodne.repositories.UnidadeFederativaRepository;
 import com.tralmeida.edza.metropolisintegracaodne.util.ParseUtil;
+import com.tralmeida.edza.metropolisintegracaodne.util.TimeUtil;
 
 @Service
 public class MunicipioService implements AddressObjectAssembler<MunicipioDTO>{
@@ -32,7 +33,7 @@ public class MunicipioService implements AddressObjectAssembler<MunicipioDTO>{
 	@Override
 	public Optional<MunicipioDTO> toAssemble(List<String> fields, ImportFile importFile, Long importacaoId) {
 		MunicipioDTO dto = new MunicipioDTO();
-	    dto.setDtAtualizacao(new Timestamp(System.currentTimeMillis()));
+	    dto.setDtAtualizacao(new Timestamp(TimeUtil.getCurrentTimeInMillis()));
 		dto.setImportacaoId(importacaoId);
 		
 		if(importFile.equals(ImportFile.LOG_LOCALIDADE)) {

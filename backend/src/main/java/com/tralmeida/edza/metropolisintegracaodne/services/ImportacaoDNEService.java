@@ -12,8 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.tralmeida.edza.metropolisintegracaodne.dto.ImportacaoDNEDTO;
-import com.tralmeida.edza.metropolisintegracaodne.dto.StatusImportacaoDTO;
-import com.tralmeida.edza.metropolisintegracaodne.dto.TabelaImportacaoDTO;
 import com.tralmeida.edza.metropolisintegracaodne.entities.ImportacaoDNE;
 import com.tralmeida.edza.metropolisintegracaodne.entities.StatusImportacao;
 import com.tralmeida.edza.metropolisintegracaodne.entityassemblers.AddressObjectAssembler;
@@ -24,6 +22,7 @@ import com.tralmeida.edza.metropolisintegracaodne.repositories.ImportacaoDNERepo
 import com.tralmeida.edza.metropolisintegracaodne.repositories.StatusImportacaoRepository;
 import com.tralmeida.edza.metropolisintegracaodne.repositories.TabelaImportacaoRepository;
 import com.tralmeida.edza.metropolisintegracaodne.services.exceptions.AddressEntityNotFoundException;
+import com.tralmeida.edza.metropolisintegracaodne.util.TimeUtil;
 
 @Service
 public class ImportacaoDNEService {
@@ -94,7 +93,7 @@ public class ImportacaoDNEService {
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	private ImportacaoDNE insert(ImportacaoDNEDTO dto) {
 		ImportacaoDNE entity = copyDTOToEntity(dto);
-		entity.setDataImportacao(new Timestamp(System.currentTimeMillis()));
+		entity.setDataImportacao(new Timestamp(TimeUtil.getCurrentTimeInMillis()));
 		entity = repository.saveAndFlush(entity);
 		
 		return entity;
